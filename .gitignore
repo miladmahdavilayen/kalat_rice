@@ -25,3 +25,4 @@ yarn-error.log*
 # local database
 users.db
 db_outputs/
+gs.sh
