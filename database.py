@@ -1,6 +1,7 @@
 import sqlite3
 import csv
 import time
+import os
 
 class Database:
     def __init__(self, db):
@@ -78,4 +79,7 @@ def get_current_time():
         
 if __name__ == "__main__":
     curr_time = get_current_time()
-    export_db(f'db_outputs/data_{curr_time}.csv')
+    path = 'db_outputs'
+    if not os.path.exists(path):
+        os.mkdir(path)
+        export_db(f'{path}/data_{curr_time}.csv')
