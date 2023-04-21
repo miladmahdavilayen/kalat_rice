@@ -29,7 +29,7 @@ width: 95%;
 max-width: 700px;
 background-color: rgba(49, 203, 155, 0.8);
 border-radius: 10px;
-padding: 2em;
+padding: 1em;
 box-shadow: 2px 2px 5px #23282c;
 
 }
@@ -40,7 +40,7 @@ font-size: 18px;
 }
 
 .select{
-margin: 2em auto;
+margin: 2em 1em;
 width: 95%;
 font-size: 16px;
 max-width: 700px;
@@ -94,9 +94,8 @@ h2 {
   max-width: 800px;
   background-color: rgba(146, 210, 19, 0.814);
   border-radius: 10px;
-  padding: .15em;
+  padding: 0.1em;
   box-shadow: 2px 2px 5px #080808;
-  
   }
 
   
@@ -125,8 +124,8 @@ h5{
   font-size: 1.2em;
   font-family: koodak;
   margin: 1em auto;
-  width: 35%;
-  max-width: 800px;
+  min-width: 300px;
+  max-width: 450px;
   background-color: rgba(210, 194, 19, 0.814);
   border-radius: 10px;
   padding: .15em;
@@ -137,11 +136,11 @@ h5{
 h6{
   text-align:center;
   color: #090715;
-  font-size: 1.2em;
+  font-size: 1em;
   font-family: koodak;
   margin: auto auto;
-  width: 20%;
   max-width: 800px;
+  min-width: 300px;
   background-color: rgba(19, 194, 210, 0.814);
   border-radius: 10px;
   padding: .15em;
@@ -167,7 +166,7 @@ h6{
 
 
 .return_button{
-  margin: auto auto;
+  margin: 1em auto;
   background-color: #eca025;
   color: #110d0d;
   border: none;

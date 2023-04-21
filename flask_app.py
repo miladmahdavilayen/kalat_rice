@@ -48,7 +48,7 @@ def verif_status():
         phone = data['phone']
         phone_verified = "Yes"
         email = data['email']
-        email_correct = True if len(email.split("@")) == 2 else False
+        email_correct = is_valid_email(email)
         address = data['address'].replace("\n", " ")
         amount = data['amount']
         order = {
@@ -65,7 +65,7 @@ def verif_status():
         # load user and order to database
         db = create_db()
         if not db.name_exists(name):
-            db.insert(name, en_name, f_name, email if email_correct else 'no correct email', phone, address, order_json, phone_verified)
+            db.insert(name, en_name, f_name, email if email_correct else 'Email Not Valid', phone, address, order_json, phone_verified)
             logger.info(f"Order of {amount} for the NEW customer {en_name} was added.")
         else:
             

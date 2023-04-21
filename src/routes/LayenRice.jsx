@@ -12,7 +12,7 @@ const LayenRiceInfo = () =>{
     const navigate = useNavigate();
     
     return(<>
-        <div >  
+        <div className='information' >  
             <h5 dir='rtl'>
                 {info}
             </h5>

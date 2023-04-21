@@ -29,10 +29,19 @@ def name_to_fing(var_name):
         return eng_name, farsi_name
 
     eng_name = var_name.title()
-    return eng_name, "نام فارسی وارد نشده است."
+    return eng_name, "No Farsi Name"
+
+
+def is_valid_email(email):
+    # Regex pattern for email validation
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+    # If email doesn't match pattern, return False
+    if not re.match(pattern, email):
+        return False
+
+    return True
 
 
 if __name__ == "__main__":
-    farsi_regex = re.compile(r'^[\u0600-\u06FF\s]+$')
-    print(farsi_regex.match("میلاد مهدوی لاین"))
-    print(farsi_regex.match("hello"))
+    pass
