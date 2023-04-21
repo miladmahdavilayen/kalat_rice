@@ -149,6 +149,11 @@ h6{
   
 }
 
+.info{
+  width: 90%;
+}
+
+
 .dual-text {
   display: flex;
   justify-content: space-between;
@@ -158,6 +163,26 @@ h6{
 .dual-text span {
   text-align: left;
   direction: rtl;
+}
+
+
+.return_button{
+  margin: auto auto;
+  background-color: #eca025;
+  color: #110d0d;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-family: koodak;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 2px 2px 5px #080808;
+}
+
+
+.return_button:hover {
+  background-color: #d1f824;
 }
 
 

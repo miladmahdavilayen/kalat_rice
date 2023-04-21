@@ -11,17 +11,17 @@ const LayenRiceInfo = () =>{
    
     const navigate = useNavigate();
     
-    return(
-        <div className='App'>  
+    return(<>
+        <div >  
             <h5 dir='rtl'>
                 {info}
             </h5>
-            <h6  dir='rtl'>
+            <h6 className="info" dir='rtl'>
               سایر اطلاعات در مورد برنج لاین در این قسمت بارگذاری خواهد شد.
             </h6>
-            <div><button onClick={() => navigate(-1)}> go back</button></div>
         </div>
-
+        <div> <button className="return_button" onClick={() => navigate(-1)}>بازگشت</button></div>
+        </>
     );
 };
 
