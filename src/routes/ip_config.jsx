@@ -15,7 +15,7 @@ function GetIp() {
         city = response.data.city;
         region = response.data.region;
         country = response.data.country;
-        alert(city);
+       
         
         // Post the IP location data to your Flask backend using axios
         axios.post('/submit-ip-location', {
