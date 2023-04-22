@@ -127,6 +127,19 @@ def get_data():
 
 
 
+@app.route('/submit-ip-location', methods=['POST'])
+def submit_ip_location():
+    ip = request.form.get('ip')
+    city = request.form.get('city')
+    region = request.form.get('region')
+    country = request.form.get('country')
+    logger.info(f"""user's ip information: 
+                ip: {ip}
+                city: {city}
+                region: {region}
+                country: {country}
+                """)
+    return 'OK'
 
 
 if __name__ == '__main__':

@@ -5,6 +5,7 @@ import Info from "./routes/LayenRice"
 import Contact from "./routes/contacts"
 import About from "./routes/About"
 
+
 import "./App.css"
 
 
@@ -24,10 +25,11 @@ const App = () => {
   
 
   return (
+    
     <div className="App">
       <RouterProvider router={router} />
     </div>
-
+    
    
  );   
 };

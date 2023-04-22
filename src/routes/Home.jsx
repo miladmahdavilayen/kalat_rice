@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import GetIp from './ip_config';
+
 
 import PhoneVerification from './PhoneVerification';
 
@@ -89,25 +91,28 @@ const Order = () => {
     <>
     <div>
         <div className='App'>
-            <div className="container">
+          <div className="container">
 
-              <h1 className='title'>برنج کلات (لاین)</h1>
-              <>
-              {formSubmitted? (null):(<Link to="/info" price={todayPrice}>
-                <div className="price-tag-container" >
-                  <div className="price-tag">
-                    <span className="price" dir='rtl'>{todayPrice} <br></br>تومان</span>
-                  </div>
+            <h1 className='title'>برنج کلات (لاین)</h1>
+            <>
+            {formSubmitted? (null):(<Link to="/info">
+              <div className="price-tag-container" >
+                <div className="price-tag">
+                  <span className="price" dir='rtl'>{todayPrice} <br></br>تومان</span>
                 </div>
-              </Link>)}
-              </>
-            </div>
+              </div>
+            </Link>)}
+            </>
+          </div>
         </div> 
         <div>
-        {formSubmitted ? (
+        {formSubmitted ? (<div>
+        <GetIp />
         <PhoneVerification phoneNumber={phoneNumber} personName={fullName} randomCode={randNumber} 
         amount={amountToBuy} address={address} email={email}
         />
+        
+        </div>
     ) : (
     
     <form onSubmit={handleFormSubmit}>
