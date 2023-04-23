@@ -42,6 +42,14 @@ def is_valid_email(email):
 
     return email
 
+def num_to_eng(phone_number):
+    is_farsi_number = re.search("[۰-۹]+", phone_number)
+    if is_farsi_number:
+        return re.sub("[۰-۹]", lambda x: str(ord(x.group(0)) - ord("۰")), phone_number)
+    else:
+        return phone_number
+    
+
 
 if __name__ == "__main__":
     pass

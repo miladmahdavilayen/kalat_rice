@@ -7,7 +7,6 @@ from loguru import logger
 import json
 import ast
 
-
 from helper import *
 
 app = Flask(__name__, static_folder='./build/static', template_folder='./build')
@@ -34,6 +33,7 @@ def submit_form():
     # send verification code to customer
     random_code = data['randNumber']
     phone = data['phoneNumber']
+    phone = num_to_eng(phone)
     send_verif_code(phone, random_code)    
     return jsonify({'message': 'Form data inserted successfully!'})
 
@@ -58,10 +58,12 @@ def verif_status():
         name = data['name']
         en_name, f_name = name_to_fing(name)
         phone = data['phone']
+        phone = num_to_eng(phone)
         email = data['email']
         email_correct = is_valid_email(email)
         address = data['address'].replace("\n", " ")
         amount = data['amount']
+        amount = num_to_eng(amount)
         
                 
         # build user and order info
@@ -148,6 +150,7 @@ def get_del_type():
     del_type = data['option']
     order_id = data['orderId']
     phone = data['phone']
+    phone = num_to_eng(phone)
     logger.info(f"Order ID: {order_id} was generated for {en_name}.")
     users = load_db()
     
