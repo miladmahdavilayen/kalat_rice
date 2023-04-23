@@ -15,7 +15,7 @@ app.secret_key = 'testkey'
 
 
 def load_db():
-    mdb = MongoDB('mahdavi-rice-db', 'test_users')
+    mdb = MongoDB('mahdavi-rice-db', 'users')
     users = mdb.get_db()
     return users
 
