@@ -1,5 +1,5 @@
 Flask
 pymongo
 loguru
-hazm
 googletrans==4.0.0rc1
+kavenegar
