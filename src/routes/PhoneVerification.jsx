@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import InformationSubmitted from './InformationSubmitted';
-import axios from 'axios';
+
+import GetIp from './ip_config';
 
 
 const PhoneVerification = (props) => {
@@ -71,17 +72,21 @@ const PhoneVerification = (props) => {
 
       // Verification submission logic here...
       setIsVerified(true);
-      
-      axios.post('/get-verif-status', {name, phone , address, email, amount});
+      // axios.post('/get-verif-status', {name, phone , address, email, amount});
     }
   }
 
   return (
     <div>
         {isVerified ? (
-        <InformationSubmitted personName={name} phone={phone} amount={riceAmount}
-        email={email} address={address} 
-        />
+          <div>
+            <>
+            <GetIp name={name} phone={phone} address={address} email={email} amount={amount}/>
+            <InformationSubmitted personName={name} phone={phone} amount={riceAmount}
+            email={email} address={address} 
+            />
+            </>
+        </div>
     ) : (
       <form onSubmit={handleFormSubmit}>
       {errors.verificationCode && <div className="flash-message" dir="rtl">{errors.verificationCode}</div>}

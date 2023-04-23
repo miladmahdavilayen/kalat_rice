@@ -38,9 +38,9 @@ def is_valid_email(email):
 
     # If email doesn't match pattern, return False
     if not re.match(pattern, email):
-        return False
+        return "Email Not Valid"
 
-    return True
+    return email
 
 
 if __name__ == "__main__":

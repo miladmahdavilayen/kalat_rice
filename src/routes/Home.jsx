@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import GetIp from './ip_config';
+
 
 
 import PhoneVerification from './PhoneVerification';
@@ -13,7 +13,7 @@ import PhoneVerification from './PhoneVerification';
 
 const Order = () => {
 
-  const [todayPrice] = useState((150000).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, ''));
+  const [todayPrice] = useState((150).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, ''));
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -23,6 +23,7 @@ const Order = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [randNumber] = useState(Math.floor(Math.random() * 900000) + 100000);
 
+  
   
   function handleFormSubmit(event) {
     
@@ -75,12 +76,13 @@ const Order = () => {
     
     } else {
       // Form submission logic here...
-      
       // setRandNumber();
       alert('کد تایید به شماره شما ارسال گردید. لطفا دکمه ok/close را بزنید.');
       alert(`عجالتا این کد خدمت شما: ${randNumber}  تا انشالا سامانه پیامکیمون راه بیفته..`)
+      
       axios.post('/submit-form', { fullName, email, phoneNumber, address, amountToBuy, randNumber});
       setFormSubmitted(true);
+      
       // Clear form data
       
       
@@ -98,7 +100,9 @@ const Order = () => {
             {formSubmitted? (null):(<Link to="/info">
               <div className="price-tag-container" >
                 <div className="price-tag">
-                  <span className="price" dir='rtl'>{todayPrice} <br></br>تومان</span>
+                
+                
+                  <span className="price" dir='rtl'><span dir='ltr'>1 kg</span><br></br>{todayPrice} <br></br>هزار تومان</span>
                 </div>
               </div>
             </Link>)}
@@ -107,7 +111,7 @@ const Order = () => {
         </div> 
         <div>
         {formSubmitted ? (<div>
-        <GetIp />
+      
         <PhoneVerification phoneNumber={phoneNumber} personName={fullName} randomCode={randNumber} 
         amount={amountToBuy} address={address} email={email}
         />

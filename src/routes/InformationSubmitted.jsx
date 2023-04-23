@@ -6,6 +6,7 @@ import axios from 'axios';
 const InformationSubmitted = (props) => {
   const name = props.personName;
   const amount = props.amount;
+  const phone = props.phone;
 
   const [option, setOption] = useState('deliver');
   const [payment, setPayment] = useState(null);
@@ -21,17 +22,18 @@ const InformationSubmitted = (props) => {
   const fRiceCost = (riceCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, 'تومان');
   const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, 'تومان');
   const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, 'تومان');
-
+  const [orderId] = useState(generateOrderId());
 
   function generateOrderId() {
-    
     const timestamp = Date.now().toString();
     const randomString = Math.random().toString(36).substring(2, 8);
     const newOrderId = `${timestamp}-${randomString}`;
-    return newOrderId;
+    return newOrderId
   }
 
-  const [orderId, setOrderID] = useState(generateOrderId());
+
+ 
+
 
 
 
@@ -52,7 +54,6 @@ const InformationSubmitted = (props) => {
   const handleDeliveryMethod = (event) =>{
     event.preventDefault(); 
     setDeleMethodPicked(true);
-    setOrderID(generateOrderId());
     if (option === 'pick-up'){
       setDeliveryCost(0);
     }else{
@@ -64,10 +65,10 @@ const InformationSubmitted = (props) => {
         setDeliveryCost(2500000);
       } 
     }
+    
+    axios.post('/delivery-type', {name, option, orderId, phone});
   
-    axios.post('/delivery-type', {name, option, orderId});
-  
-  };
+    };
 
   
   
@@ -121,7 +122,7 @@ const InformationSubmitted = (props) => {
               <option value="deliver" dir='rtl'>برنج به آدرس من ارسال شود.</option>
               <option value="pick-up" dir='rtl'>برنج را در محل توزیع تحویل خواهم گرفت.</option>
             </select>
-            <input type="submit" value="ثبت" className='submit_but'></input>
+            <button type="submit" className='submit_but'>ثبت خرید</button>
           </form>)
       }
     </div>

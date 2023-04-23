@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template, send_from_directory, flash, session
 from database import Database, export_db, get_current_time
+from mongo_db import MongoDB
 import os
 import time
 from loguru import logger
@@ -14,9 +15,10 @@ app = Flask(__name__, static_folder='./build/static', template_folder='./build')
 app.secret_key = 'testkey'
 
 
-def create_db():
-    db = Database('users.db')
-    return db
+def load_db():
+    mdb = MongoDB('mahdavi-rice-db', 'test_users')
+    users = mdb.get_db()
+    return users
 
 
 @app.route('/')
@@ -32,9 +34,7 @@ def submit_form():
     # send verification code to customer
     random_code = data['randNumber']
     phone = data['phoneNumber']
-    send_verif_code(phone, random_code)
-   
-        
+    send_verif_code(phone, random_code)    
     return jsonify({'message': 'Form data inserted successfully!'})
 
 
@@ -42,42 +42,87 @@ def submit_form():
 @app.route('/get-verif-status', methods=['POST'])
 def verif_status():
     data = request.json
+    print(data, 'here milad')
     if data:
+        # validation and checks
+        ip_info = {
+            'ip' : data['ip'],
+            'city' : data['city'],
+            'region' : data['region'],
+            'country' : data['country'],
+            'location' : data['location'],
+            'time_zone' : data['timezone'],
+            'host_name' : data['hostname'],
+            'postal' : data['postal']
+            }
         name = data['name']
         en_name, f_name = name_to_fing(name)
         phone = data['phone']
-        phone_verified = "Yes"
         email = data['email']
         email_correct = is_valid_email(email)
         address = data['address'].replace("\n", " ")
         amount = data['amount']
+        
+                
+        # build user and order info
+        
+           
         order = {
-            # 'id_': 1,
-            'order_id': None,
+            'order_id': '',
             'amount': amount,
-            'delivery_type': None,
-            'order_date_time': get_current_time()
+            'delivery_type': 'Not Selected',
+            'order_date_time': get_current_time(),
+            'ip_info': ip_info
             }
+        
+        user = {
+            'name': name,
+            'en_name': en_name,
+            'f_name': f_name,
+            'phone': phone,
+            'phone_verified': 'YES',
+            'email': email_correct,
+            'address': address,
+            'orders': [order],
+            'payment': 'Not Paid'
+        }
         
         order_json = str([order])
         
         
-        # load user and order to database
-        db = create_db()
-        if not db.name_exists(name):
-            db.insert(name, en_name, f_name, email if email_correct else 'Email Not Valid', phone, address, order_json, phone_verified)
-            logger.info(f"Order of {amount} for the NEW customer {en_name} was added.")
-        else:
-            
-            logger.info(f"customer {en_name} info already in system")
-            previous_orders = db.fetch_col_for_name(name, 'orders')
-            db_string = previous_orders[0][0]
-            updated_orders = f"{db_string[:-1]}, {str(order)}]"
-            db.update_order(name, updated_orders)
-            logger.info(f"Order of {amount} for the EXISTING customer {en_name} was added.")
+        # load db
+        users = load_db()
         
+        
+        name_querry = {'name':f'{name}'}
+        phone_querry = {'phone': f'{phone}'}
+        
+        
+        existing_user = users.find_one(name_querry)
+        
+        if existing_user:
+            if users.find_one({"$and": [name_querry, phone_querry]}):
+                logger.info(f"customer {en_name} info already in system")
+                existing_user['orders'].append(order)
+                users.update_one(name_querry, {"$set": {"orders": existing_user['orders']}})
+                logger.info(f"Order of {amount} for the EXISTING customer {en_name} was added.")
+            else:
+                logger.info(f"NAME: {en_name} is in the system with a different PHONE. Adding this one as a new user.")
+                users.insert_one(user)
+            
+        else:
+            if users.find_one(phone_querry):
+                logger.info(f'''PHONE: {phone} is already in the system with a different NAME. 
+                            Although since the phone verification was successful, 
+                            Adding this one as a new customer too.''')
+                users.insert_one(user)
+                logger.info(f"Order of {amount} for the DOUBTEDLY NEW customer {en_name} was added.")
+            else:
+                users.insert_one(user)
+                logger.info(f"Order of {amount} for BRAND NEW customer {en_name} was added.")
+                
     else:
-        logger.info(f"{en_name} could not verify phone number..")
+        logger.info(f"could not verify phone number..")
         
         
     return jsonify(data)
@@ -98,48 +143,29 @@ def get_del_option():
 @app.route('/delivery-type', methods=['POST'])
 def get_del_type():
     data = request.json
-    print(data)
     name = data['name']
     en_name, _ = name_to_fing(name)
     del_type = data['option']
     order_id = data['orderId']
+    phone = data['phone']
     logger.info(f"Order ID: {order_id} was generated for {en_name}.")
-    db = create_db()
-    if db.name_exists(name):
-        previous_orders = db.fetch_col_for_name(name, 'orders')
-        db_string = previous_orders[0][0]
-        ast_lst = ast.literal_eval(db_string)
-        ast_lst[-1]['delivery_type'] = del_type
-        ast_lst[-1]['order_id'] = order_id
-        db.update_order(name, str(ast_lst))
-        logger.info(f"Order ID {order_id} with a delivery choice of {del_type} submitted for {en_name}")
+    users = load_db()
+    
+    name_querry = {'name':f'{name}'}
+    phone_querry = {'phone': f'{phone}'}
+    name_phone_match = {"$and": [name_querry, phone_querry]}
+    existing_user = users.find_one(name_phone_match)
+    new_val = {'delivery_type': del_type, 'order_id': order_id}
+    
+    existing_user['orders'][-1].update(new_val)
+    users.update_one(name_phone_match, {"$set": {"orders": existing_user['orders']}})
+    
+   
+    logger.info(f"Order ID {order_id} with a delivery choice of {del_type} submitted for {en_name}")
     
     return jsonify(data)
 
 
-
-
-@app.route('/get-data', methods=['GET'])
-def get_data():
-    db = create_db()
-    rows = db.fetch_all()
-    return jsonify(rows)
-
-
-
-@app.route('/submit-ip-location', methods=['POST'])
-def submit_ip_location():
-    ip = request.form.get('ip')
-    city = request.form.get('city')
-    region = request.form.get('region')
-    country = request.form.get('country')
-    logger.info(f"""user's ip information: 
-                ip: {ip}
-                city: {city}
-                region: {region}
-                country: {country}
-                """)
-    return 'OK'
 
 
 if __name__ == '__main__':
