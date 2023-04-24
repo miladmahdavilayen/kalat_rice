@@ -6,23 +6,44 @@ import axios from 'axios';
 
 import PhoneVerification from './PhoneVerification';
 
-
+const cities = [
+  "مشهد",
+  "تهران",
+  "اصفهان",
+  "تبریز",
+  "شیراز",
+  "اردبیل",
+  "قزوین",
+  "رشت",
+  "نیشابور",
+  "درگز",
+  "دیگر شهرها..."
+];
 
 
 
 
 const Order = () => {
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
 
   const [todayPrice] = useState((150).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, ''));
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
+  
   const [amountToBuy, setAmountToBuy] = useState("");
   const [errors, setErrors] = useState({});
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [randNumber] = useState(Math.floor(Math.random() * 900000) + 100000);
 
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
+
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
   
   
   function handleFormSubmit(event) {
@@ -80,7 +101,8 @@ const Order = () => {
       alert('کد تایید به شماره شما ارسال گردید. لطفا دکمه ok/close را بزنید.');
       alert(`عجالتا این کد خدمت شما: ${randNumber}  تا انشالا سامانه پیامکیمون راه بیفته..`)
       
-      axios.post('/submit-form', { fullName, email, phoneNumber, address, amountToBuy, randNumber});
+      console.log(`City: ${city}, Address: ${address}`);
+      axios.post('/submit-form', { fullName, email, phoneNumber, address, amountToBuy, randNumber, city});
       setFormSubmitted(true);
       
       // Clear form data
@@ -162,13 +184,24 @@ const Order = () => {
       {errors.address && <div className="flash-message" dir="rtl">{errors.address}</div>}
       <div>
         <label htmlFor="address" dir="rtl">آدرس تحویل:</label>
+        <div dir="rtl">
+          <select className='select_city' dir="rtl" value={city} onChange={handleCityChange}>
+            <option value="">انتخاب شهر</option>
+            {cities.map((city) => (
+            <option key={city} value={city}>
+                {city}
+            </option>
+            ))}
+          </select>
+        </div>
         <textarea
-          dir="rtl"
-          id="address"
-          name="address"
-          value={address}
-          onChange={(event) => setAddress(event.target.value)}
-        />
+              placeholder="لطفا اینجا آدرس کامل خود را وارد نمایید."
+              dir="rtl"
+              id="address"
+              name="address"
+              value={address}
+              onChange={handleAddressChange}
+          />
       </div>
 
       {errors.amountToBuy && <div className="flash-message" dir="rtl">{errors.amountToBuy}</div>}

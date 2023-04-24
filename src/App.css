@@ -52,6 +52,20 @@ font-family: koodak;
 text-align: center;
 }
 
+.select_city{
+  margin: .5em 0em;
+  margin-top: 0;
+  width: 30%;
+  font-size: 16px;
+  max-width: 300px;
+  background-color: rgba(236, 239, 141, 0.8);
+  border-radius: 10px;
+  padding: .3;
+  box-shadow: 2px 2px 5px #085d92;
+  font-family: koodak;
+  text-align: center;
+  }
+
 .submit_but{
 background-color: #eca025;
 color: #110d0d;
@@ -112,6 +126,7 @@ h3 {
   padding: .15em;
   box-shadow: 2px 2px 5px #080808;
   }
+
 
 h4{
   font-size: .85em;
@@ -196,12 +211,13 @@ form input[type="text"],
 form input[type="tel"],
 form input[type="email_"],
 form textarea {
-  font-size: 16px;
+  font-size: 15px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-family: koodak;
 }
 
 form button[type="submit"] {
