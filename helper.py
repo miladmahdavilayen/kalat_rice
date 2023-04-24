@@ -108,7 +108,7 @@ def farsi_to_english(word):
 def name_to_fing(var_name):
     farsi_regex = re.compile(r'^[\u0600-\u06FF\s]+$')
     if farsi_regex.match(var_name):
-        eng_name = farsi_to_english(var).title()
+        eng_name = farsi_to_english(var_name).title()
         farsi_name = var_name
         return eng_name, farsi_name
     eng_name = var_name.title()
