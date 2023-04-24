@@ -1,6 +1,5 @@
 import random
 import re
-from googletrans import Translator
 from kavenegar import KavenegarAPI
 
 
@@ -20,16 +19,101 @@ def send_verif_code(random_gen, phone_num):
     # return response
 
 
+
+
+def farsi_to_english(word):
+    """
+    Converts a Farsi word to its closest match in English letters.
+    """
+    # Define translation rules
+    translation = {
+        'ا': 'a',
+        'آ': 'a',
+        'ب': 'b',
+        'پ': 'p',
+        'ت': 't',
+        'ث': 's',
+        'ج': 'j',
+        'چ': 'ch',
+        'ح': 'h',
+        'خ': 'kh',
+        'د': 'd',
+        'ذ': 'z',
+        'ر': 'r',
+        'ز': 'z',
+        'ژ': 'zh',
+        'س': 's',
+        'ش': 'sh',
+        'ص': 's',
+        'ض': 'z',
+        'ط': 't',
+        'ظ': 'z',
+        'ع': 'a',
+        'غ': 'gh',
+        'ف': 'f',
+        'ق': 'q',
+        'ک': 'k',
+        'گ': 'g',
+        'ل': 'l',
+        'م': 'm',
+        'ن': 'n',
+        'و': 'o',
+        'ه': 'h',
+        'ی': 'y',
+        'ئ': 'y',
+        'ّ': '',
+        'ْ': '',
+        'ٌ': '',
+        'ٍ': '',
+        'ً': '',
+        'ُ': '',
+        'ِ': '',
+        'َ': '',
+        'ٰ': '',
+        'ٔ': '',
+        'ٖ': '',
+        'ٗ': '',
+        '٘': '',
+        'ٙ': '',
+        'ٚ': '',
+        'ٓ': '',
+        'ٕ': '',
+        'ۡ': '',
+        'ۨ': '',
+        '۪': '',
+        '۫': '',
+        '۬': '',
+        '۰': '0',
+        '۱': '1',
+        '۲': '2',
+        '۳': '3',
+        '۴': '4',
+        '۵': '5',
+        '۶': '6',
+        '۷': '7',
+        '۸': '8',
+        '۹': '9'
+    }
+    
+    # Convert Farsi letters to English letters using translation rules
+    english_word = ''
+    for letter in word:
+        if letter in translation:
+            english_word += translation[letter]
+        else:
+            english_word += letter
+    return english_word
+
+
 def name_to_fing(var_name):
     farsi_regex = re.compile(r'^[\u0600-\u06FF\s]+$')
     if farsi_regex.match(var_name):
-        translator = Translator()
+        eng_name = farsi_to_english(var).title()
         farsi_name = var_name
-        eng_name = translator.translate(farsi_name, dest='en').text
         return eng_name, farsi_name
-
     eng_name = var_name.title()
     return eng_name, "No Farsi Name"
+
 
 
 def is_valid_email(email):
