@@ -18,6 +18,7 @@ function GetIp(props) {
     let name = props.name;
     let email = props.email;
     let phone = props.phone;
+    let deliveryCity = props.city;
     
     axios.get('https://ipinfo.io')
       .then(response => {
@@ -45,7 +46,8 @@ function GetIp(props) {
           phone: phone, 
           address: address, 
           email: email, 
-          amount: amount
+          amount: amount,
+          deliveryCity : deliveryCity
         })
         
           .then(response => {

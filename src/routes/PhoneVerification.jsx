@@ -11,6 +11,7 @@ const PhoneVerification = (props) => {
   const address = props.address;
   const email = props.email;
   const amount = props.amount
+  const city = props.city
   const str_random_code = random_code.toString()
 
   const [verificationCode, setVerificationCode] = useState("");
@@ -81,7 +82,7 @@ const PhoneVerification = (props) => {
         {isVerified ? (
           <div>
             <>
-            <GetIp name={name} phone={phone} address={address} email={email} amount={amount}/>
+            <GetIp name={name} phone={phone} address={address} email={email} amount={amount} city={city}/>
             <InformationSubmitted personName={name} phone={phone} amount={riceAmount}
             email={email} address={address} 
             />

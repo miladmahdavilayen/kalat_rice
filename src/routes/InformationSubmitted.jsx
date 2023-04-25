@@ -66,7 +66,7 @@ const InformationSubmitted = (props) => {
       } 
     }
     
-    axios.post('/delivery-type', {name, option, orderId, phone});
+    axios.post('/delivery-type', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice});
   
     };
 

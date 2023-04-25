@@ -64,6 +64,7 @@ def verif_status():
         address = data['address'].replace("\n", " ")
         amount = data['amount']
         amount = num_to_eng(amount)
+        delivery_city = data['deliveryCity']
         
                 
         # build user and order info
@@ -74,6 +75,8 @@ def verif_status():
             'amount': amount,
             'delivery_type': 'Not Selected',
             'order_date_time': get_current_time(),
+            'delivery_city': delivery_city,
+            'delivery_address': address,
             'ip_info': ip_info
             }
         
@@ -151,6 +154,11 @@ def get_del_type():
     order_id = data['orderId']
     phone = data['phone']
     phone = num_to_eng(phone)
+    
+    kg_price = data['riceKgPrice']
+    delivery_cost = data['deliveryCost']
+    total_charge = data['totalPrice']
+    
     logger.info(f"Order ID: {order_id} was generated for {en_name}.")
     users = load_db()
     
@@ -158,7 +166,8 @@ def get_del_type():
     phone_querry = {'phone': f'{phone}'}
     name_phone_match = {"$and": [name_querry, phone_querry]}
     existing_user = users.find_one(name_phone_match)
-    new_val = {'delivery_type': del_type, 'order_id': order_id}
+    new_val = {'delivery_type': del_type, 'order_id': order_id, 'rice_kg_price': kg_price,
+               'delivery_cost': delivery_cost, 'total_charge': total_charge}
     
     existing_user['orders'][-1].update(new_val)
     users.update_one(name_phone_match, {"$set": {"orders": existing_user['orders']}})

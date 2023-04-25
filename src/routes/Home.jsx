@@ -7,7 +7,6 @@ import axios from 'axios';
 import PhoneVerification from './PhoneVerification';
 
 const cities = [
-  "مشهد",
   "تهران",
   "اصفهان",
   "تبریز",
@@ -135,7 +134,7 @@ const Order = () => {
         {formSubmitted ? (<div>
       
         <PhoneVerification phoneNumber={phoneNumber} personName={fullName} randomCode={randNumber} 
-        amount={amountToBuy} address={address} email={email}
+        amount={amountToBuy} address={address} email={email} city={city}
         />
         
         </div>
@@ -186,7 +185,7 @@ const Order = () => {
         <label htmlFor="address" dir="rtl">آدرس تحویل:</label>
         <div dir="rtl">
           <select className='select_city' dir="rtl" value={city} onChange={handleCityChange}>
-            <option value="">انتخاب شهر</option>
+            <option value="">مشهد</option>
             {cities.map((city) => (
             <option key={city} value={city}>
                 {city}
