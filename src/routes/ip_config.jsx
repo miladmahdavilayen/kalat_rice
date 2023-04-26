@@ -4,7 +4,7 @@ import axios from 'axios';
 function GetIp(props) {
   useEffect(() => {
     // Retrieve the user's IP address and approximate location
-    
+
     let ip = '';
     let city = '';
     let region = '';
@@ -15,10 +15,7 @@ function GetIp(props) {
     let hostname = '';
 
     // milad local ip address
-    axios.get("https://ipinfo.io/35.146.15.101/json\?token\=401cc3d28ca774")
-
-    // server ip address
-    // axios.get("https://ipinfo.io/3.29.58.244/json\?token\=401cc3d28ca774")
+    axios.get("https://ipinfo.io/35.146.15.101/json?token=401cc3d28ca774")
       .then(response => {
         ip = response.data.ip;
         city = response.data.city;
@@ -44,22 +41,37 @@ function GetIp(props) {
           email: props.email,
           amount: props.amount,
           deliveryCity: props.city
-        })
-        .then(response => {
-          console.log('IP location data submitted successfully');
-        })
-        .catch(error => {
-          console.error('Error submitting IP location data:', error);
         });
-
       })
       .catch(error => {
         console.error('Error retrieving IP location data:', error);
+        axios.post('/get-verif-status', {
+          ip: ip,
+          city: city,
+          region: region,
+          country: country,
+          location: location,
+          postal: postal,
+          timezone: timezone,
+          hostname: hostname,
+          name: props.name,
+          phone: props.phone,
+          address: props.address,
+          email: props.email,
+          amount: props.amount,
+          deliveryCity: props.city
+        })
+        .then(response => {
+          console.log('Data submitted successfully');
+        })
+        .catch(error => {
+          console.error('Error submitting data:', error);
+        });
+      
       });
 
-
     
-  },);
+  });
 
   return (
     <div>
