@@ -45,13 +45,13 @@ font-size: 18px;
 }
 
 .select{
-margin: 2em 1em;
+margin: 1em 1em;
 width: 95%;
 font-size: 16px;
 max-width: 700px;
 background-color: rgba(236, 239, 141, 0.8);
 border-radius: 10px;
-padding: 1em;
+padding: .1em;
 box-shadow: 2px 2px 5px #085d92;
 font-family: koodak;
 text-align: center;
@@ -82,10 +82,31 @@ font-family: koodak;
 cursor: pointer;
 transition: background-color 0.2s ease;
 box-shadow: 2px 2px 5px #080808;
+margin-top: .5em;
 }
 .submit_but[type="submit"]:hover {
   background-color: #d1f824;
 }
+
+
+.edit_amount{
+  background-color: rgba(236, 239, 141, 0.8);;
+  color: #110d0d;
+  border: none;
+  padding: 1.5px 4px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-family: koodak;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 2px 2px 5px #080808;
+  margin-top: .5em;
+  margin-right: 15px;
+  min-width: 50px;
+  }
+  .edit_amount:hover {
+    background-color: #d1f824;
+  }
 
 
 h1 {
@@ -104,7 +125,7 @@ h1 {
 }
 
 h2 {
-  text-align:center;
+  text-align:right;
   color: #2310ba;
   font-size: 1.2em;
   font-family: koodak;
@@ -113,7 +134,7 @@ h2 {
   max-width: 800px;
   background-color: rgba(146, 210, 19, 0.814);
   border-radius: 10px;
-  padding: 0.1em;
+  padding: 0.5em;
   box-shadow: 2px 2px 5px #080808;
   }
 
@@ -135,6 +156,7 @@ h3 {
 
 h4{
   font-size: .85em;
+  padding: 0 .5em;
 }
 
 
@@ -243,6 +265,33 @@ form button[type="submit"]:hover {
   background-color: #2e8b57;
 }
 
+.change-but{background-color: rgba(233, 234, 214, 0.8);;
+  color: #110d0d;
+  border: none;
+  padding: 1px 3px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-family: koodak;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 2px 2px 5px #080808;
+  margin-top: .5em;
+  margin-left: 7px;
+  min-width: 40px;
+  }
+  .change-but:hover {
+    background-color: #d1f824;
+  }
+
+.change-input{
+  padding: .3em .3em;
+  width: 115px;
+  font-family: koodak;
+  border: 1px solid #093b1c;
+  border-radius: 5px;
+
+}
+
 /* Flash message styles */
 .flash-message {
   display: flex;
@@ -274,6 +323,14 @@ footer {
 
 
 /* price tage styles */
+
+.price-tag-container {
+  position: absolute;
+  top: 160%;
+  left: 35%;
+  transform: translateX(-50%) rotate(90deg);
+}
+
 .price-tag {
   background-image: url('../public/static/media/blue_tag.png');
   background-size: contain;
@@ -310,21 +367,22 @@ footer {
   transform: translateX(-50%) rotate(-45deg);
   
 }
+
 .container {
   position: relative;
-  /* margin: .01em 5em; */
+  /* display: inline-block; */
 }
 
 .title {
   text-align: center;
   font-size: 48px;
   margin-top: 50px;
-  /* color: #e3732e; */
   text-shadow: 1px 1px #f8f8f8;
   animation: fade-in 1s ease-out;
   font-family: entezar;
-
+  /* position: relative; */
 }
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -336,13 +394,6 @@ footer {
   }
 }
 
-
-.price-tag-container {
-  position: absolute;
-  top: 160%;
-  left: 35%;
-  transform: translateX(-50%) rotate(90deg);
-}
 
 
 @keyframes cloud {

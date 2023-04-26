@@ -1,6 +1,5 @@
 import React, { useState} from 'react';
 import InformationSubmitted from './InformationSubmitted';
-
 import GetIp from './ip_config';
 
 
@@ -73,7 +72,7 @@ const PhoneVerification = (props) => {
 
       // Verification submission logic here...
       setIsVerified(true);
-      // axios.post('/get-verif-status', {name, phone , address, email, amount});
+      
     }
   }
 
@@ -83,9 +82,7 @@ const PhoneVerification = (props) => {
           <div>
             <>
             <GetIp name={name} phone={phone} address={address} email={email} amount={amount} city={city}/>
-            <InformationSubmitted personName={name} phone={phone} amount={riceAmount}
-            email={email} address={address} 
-            />
+            <InformationSubmitted personName={name} phone={phone} amount={riceAmount} email={email} address={address} />
             </>
         </div>
     ) : (

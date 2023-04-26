@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 
 function GetIp(props) {
-
   useEffect(() => {
     // Retrieve the user's IP address and approximate location
+    
     let ip = '';
     let city = '';
     let region = '';
@@ -13,15 +13,11 @@ function GetIp(props) {
     let timezone = '';
     let location = '';
     let hostname = '';
-    let address = props.address;
-    let amount = props.amount;
-    let name = props.name;
-    let email = props.email;
-    let phone = props.phone;
-    let deliveryCity = props.city;
-    
-    axios.get('https://ipinfo.io')
+
+    // axios.get("https://ipinfo.io/35.146.15.101/json\?token\=401cc3d28ca774")
+    axios.get("https://ipinfo.io/3.29.58.244/json\?token\=401cc3d28ca774")
       .then(response => {
+        console.log('javad')
         ip = response.data.ip;
         city = response.data.city;
         region = response.data.region;
@@ -30,9 +26,7 @@ function GetIp(props) {
         timezone = response.data.timezone;
         hostname = response.data.hostname;
         postal = response.data.postal;
-    
-        
-        // Post the IP location data to your Flask backend using axios
+
         axios.post('/get-verif-status', {
           ip: ip,
           city: city,
@@ -42,26 +36,29 @@ function GetIp(props) {
           postal: postal,
           timezone: timezone,
           hostname: hostname,
-          name: name, 
-          phone: phone, 
-          address: address, 
-          email: email, 
-          amount: amount,
-          deliveryCity : deliveryCity
+          name: props.name,
+          phone: props.phone,
+          address: props.address,
+          email: props.email,
+          amount: props.amount,
+          deliveryCity: props.city
         })
-        
-          .then(response => {
-            console.log('IP location data submitted successfully');
-          })
-          .catch(error => {
-            console.error('Error submitting IP location data:', error);
-          });
+        .then(response => {
+          console.log('IP location data submitted successfully');
+        })
+        .catch(error => {
+          console.error('Error submitting IP location data:', error);
+        });
+
       })
       .catch(error => {
         console.error('Error retrieving IP location data:', error);
       });
-  });
-  
+
+
+    
+  },);
+
   return (
     <div>
       {/* Your component JSX goes here */}

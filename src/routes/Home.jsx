@@ -23,7 +23,7 @@ const cities = [
 
 
 const Order = () => {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("مشهد");
   const [address, setAddress] = useState("");
 
   const [todayPrice] = useState((150).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, ''));
@@ -101,7 +101,7 @@ const Order = () => {
       alert(`عجالتا این کد خدمت شما: ${randNumber}  تا انشالا سامانه پیامکیمون راه بیفته..`)
       
       console.log(`City: ${city}, Address: ${address}`);
-      axios.post('/submit-form', { fullName, email, phoneNumber, address, amountToBuy, randNumber, city});
+      axios.post('/submit-form', { fullName, email, phoneNumber, address, randNumber, city, amountToBuy});
       setFormSubmitted(true);
       
       // Clear form data
@@ -115,19 +115,16 @@ const Order = () => {
     <div>
         <div className='App'>
           <div className="container">
-            
             <h1 className='title'>برنج کلات (لاین)</h1>
-        
             <>
-            {formSubmitted? (null):(<Link to="/info">
-              <div className="price-tag-container" >
-                <div className="price-tag">
-                
-                
-                  <span className="price" dir='rtl'><span dir='ltr'>1 kg</span><br></br>{todayPrice} <br></br>هزار تومان</span>
+            {formSubmitted? (null):(
+              <Link to="/info">
+                <div className="price-tag-container" >
+                  <div className="price-tag">
+                    <span className="price" dir='rtl'><span dir='ltr'>1 kg</span><br></br>{todayPrice} <br></br>هزار تومان</span>
+                  </div>
                 </div>
-              </div>
-            </Link>)}
+              </Link>)}
             </>
           </div>
         </div> 

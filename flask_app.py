@@ -42,7 +42,7 @@ def submit_form():
 @app.route('/get-verif-status', methods=['POST'])
 def verif_status():
     data = request.json
-    print(data, 'here milad')
+    # logger.info(data, 'here milad')
     if data:
         # validation and checks
         ip_info = {
@@ -72,7 +72,7 @@ def verif_status():
            
         order = {
             'order_id': '',
-            'amount': amount,
+            'initial_amount': amount,
             'delivery_type': 'Not Selected',
             'order_date_time': get_current_time(),
             'delivery_city': delivery_city,
@@ -92,7 +92,6 @@ def verif_status():
             'payment': 'Not Paid'
         }
         
-        order_json = str([order])
         
         
         # load db
@@ -110,7 +109,7 @@ def verif_status():
                 logger.info(f"customer {en_name} info already in system")
                 existing_user['orders'].append(order)
                 users.update_one(name_querry, {"$set": {"orders": existing_user['orders']}})
-                logger.info(f"Order of {amount} for the EXISTING customer {en_name} was added.")
+                logger.info(f"Order of {amount} for the EXISTING customer {en_name} is being processed.")
             else:
                 logger.info(f"NAME: {en_name} is in the system with a different PHONE. Adding this one as a new user.")
                 users.insert_one(user)
@@ -121,10 +120,10 @@ def verif_status():
                             Although since the phone verification was successful, 
                             Adding this one as a new customer too.''')
                 users.insert_one(user)
-                logger.info(f"Order of {amount} for the DOUBTEDLY NEW customer {en_name} was added.")
+                logger.info(f"Order of {amount} for the DOUBTEDLY NEW customer {en_name} is being processed.")
             else:
                 users.insert_one(user)
-                logger.info(f"Order of {amount} for BRAND NEW customer {en_name} was added.")
+                logger.info(f"Order of {amount} for BRAND NEW customer {en_name} is being processed.")
                 
     else:
         logger.info(f"could not verify phone number..")
@@ -155,6 +154,7 @@ def get_del_type():
     phone = data['phone']
     phone = num_to_eng(phone)
     
+    rice_amount = data['amount']
     kg_price = data['riceKgPrice']
     delivery_cost = data['deliveryCost']
     total_charge = data['totalPrice']
@@ -167,7 +167,7 @@ def get_del_type():
     name_phone_match = {"$and": [name_querry, phone_querry]}
     existing_user = users.find_one(name_phone_match)
     new_val = {'delivery_type': del_type, 'order_id': order_id, 'rice_kg_price': kg_price,
-               'delivery_cost': delivery_cost, 'total_charge': total_charge}
+               'delivery_cost': delivery_cost, 'total_charge': total_charge, 'final_amount': rice_amount}
     
     existing_user['orders'][-1].update(new_val)
     users.update_one(name_phone_match, {"$set": {"orders": existing_user['orders']}})

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const InformationSubmitted = (props) => {
   const name = props.personName;
-  const amount = props.amount;
+  const [amount, setAmount] = useState(props.amount);
   const phone = props.phone;
 
   const [option, setOption] = useState('deliver');
@@ -13,6 +13,7 @@ const InformationSubmitted = (props) => {
   const [delMethodPicked, setDeleMethodPicked] = useState(null);
   const [riceKgPrice] = useState(1500000);
   const [deliveryCost, setDeliveryCost] = useState(0);
+  const [showInput, setShowInput] = useState(false);
   
   
   
@@ -22,6 +23,7 @@ const InformationSubmitted = (props) => {
   const fRiceCost = (riceCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
   const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
   const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
+  const fAmount = (parseFloat(amount)).toLocaleString('fa');
   const [orderId] = useState(generateOrderId());
 
   function generateOrderId() {
@@ -32,10 +34,20 @@ const InformationSubmitted = (props) => {
   }
 
 
- 
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    setShowInput(true);
+  };
 
+  const handleInputChange = (event) =>{
+    event.preventDefault();
+    setAmount(parseInt(event.target.value));
+  }
 
-
+  const handleInputSubmit = () => {
+    setShowInput(false);
+    console.log(amount); // or use the value in another way
+  };
 
   const handlePayment = (event) => {
     event.preventDefault();
@@ -66,7 +78,7 @@ const InformationSubmitted = (props) => {
       } 
     }
     
-    axios.post('/delivery-type', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice});
+    axios.post('/delivery-type', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
   
     };
 
@@ -85,13 +97,13 @@ const InformationSubmitted = (props) => {
         <>
         <form onSubmit={handlePayment}>
           <div>
-          <h2 dir='rtl'>گزینه ارسال برنج برای شما انتخاب شد. لطفا پس از مشاهده خلاصه سفارش، دکمه پرداخت را کلیک کنید تا به سامانه پرداخت هدایت شوید. کد رهگیری پرداخت: </h2>
+          <h2 dir='rtl'>گزینه ارسال برنج برای شما انتخاب شد.<br/> لطفا پس از مشاهده خلاصه سفارش، دکمه پرداخت را کلیک کنید تا به سامانه پرداخت هدایت شوید. کد رهگیری پرداخت: </h2>
           <h5 dir='ltr'>{orderId}</h5>
           </div>
           <div>
               <h3  dir='rtl'> 
                 <h4 className='dual-text'>صورتحساب:</h4>
-                <h4 className='dual-text' >{amount} کیلوگرم برنج: <span> {fRiceCost} تومان</span> </h4>
+                <h4 className='dual-text' >{fAmount} کیلوگرم برنج: <span> {fRiceCost} تومان</span> </h4>
                 <h4 className='dual-text'>روش دریافت: <span>دلیوری به آدرس</span> </h4> 
                 <h4 className='dual-text'>هزینه ارسال: <span>{fDeliveryCost} تومان</span> </h4> 
                 <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
@@ -103,13 +115,13 @@ const InformationSubmitted = (props) => {
         ): (<>
           <form onSubmit={handlePayment}>
             <div>
-            <h2 dir='rtl'>گزینه تحویل در محل توزیع برای شما انتخاب شد. لطفا پس از مشاهده خلاصه سفارش، دکمه پرداخت را کلیک کنید تا به سامانه پرداخت هدایت شوید. کد رهگیری پرداخت:</h2>
+            <h2 dir='rtl'>گزینه تحویل در محل توزیع برای شما انتخاب شد.<br/> لطفا پس از مشاهده خلاصه سفارش، دکمه پرداخت را کلیک کنید تا به سامانه پرداخت هدایت شوید. کد رهگیری پرداخت:</h2>
             <h5 dir='ltr'>{orderId}</h5>
             </div>
             <div>
             <h3  dir='rtl'> 
               <h4 className='dual-text'>صورتحساب:</h4>
-              <h4 className='dual-text' >{amount} کیلوگرم برنج: <span> {fRiceCost} تومان</span> </h4>
+              <h4 className='dual-text' >{fAmount} کیلوگرم برنج: <span> {fRiceCost} تومان</span> </h4>
               <h4 className='dual-text'>روش دریافت: <span>دریافت در محل توزیع  </span> </h4> 
               <h4 className='dual-text'>هزینه ارسال: <span>۰ تومان</span> </h4> 
               <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
@@ -119,12 +131,19 @@ const InformationSubmitted = (props) => {
           </form>
           </>
           )):(<form onSubmit={handleDeliveryMethod}>
-            <label for="del_method" dir='rtl'>لطفا نحوه دریافت برنج کلات را مشخص نمایید: </label>
+            <label for="del_method" dir='rtl'>مشتری عزیز، شماره همراه شما تایید گردید.<br/>لطفا نحوه دریافت برنج کلات را مشخص نمایید: </label>
             <select name="del_method" id="del_method" dir='rtl' className='select' onChange={handleOptions}>
               <option value="deliver" dir='rtl'>برنج به آدرس من ارسال شود.</option>
               <option value="pick-up" dir='rtl'>برنج را در محل توزیع تحویل خواهم گرفت.</option>
             </select>
-            <button type="submit" className='submit_but'>صورتحساب</button>
+            <label className='dual-text' for="edit_amount" dir='rtl'>  مقدار برنج درخواستی: <span dir='ltr'>{fAmount} کیلوگرم <button className='edit_amount' onClick={handleButtonClick}>تغییر</button></span> </label>
+            {showInput && (
+              <div>
+                <input className='change-input' type="number" onChange={handleInputChange} />
+                <button className='change-but' onClick={handleInputSubmit}>ثبت</button>
+              </div>
+            )}
+            <button type="submit" className='submit_but' >صورتحساب</button>
           </form>)
       }
     </div>
