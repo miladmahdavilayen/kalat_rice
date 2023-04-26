@@ -14,10 +14,12 @@ function GetIp(props) {
     let location = '';
     let hostname = '';
 
+    // milad local ip address
     // axios.get("https://ipinfo.io/35.146.15.101/json\?token\=401cc3d28ca774")
+
+    // server ip address
     axios.get("https://ipinfo.io/3.29.58.244/json\?token\=401cc3d28ca774")
       .then(response => {
-        console.log('javad')
         ip = response.data.ip;
         city = response.data.city;
         region = response.data.region;

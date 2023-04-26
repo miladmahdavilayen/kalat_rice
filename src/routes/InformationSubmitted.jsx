@@ -15,7 +15,7 @@ const InformationSubmitted = (props) => {
   const [deliveryCost, setDeliveryCost] = useState(0);
   const [showInput, setShowInput] = useState(false);
   
-  
+
   
   
   const riceCost = parseFloat(amount) * riceKgPrice;
@@ -25,6 +25,23 @@ const InformationSubmitted = (props) => {
   const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
   const fAmount = (parseFloat(amount)).toLocaleString('fa');
   const [orderId] = useState(generateOrderId());
+
+  const toEnglish = (farsiNum) =>{
+    const engNum = farsiNum
+  .toLocaleString("fa-IR")
+  .replace(/۰/g, "0")
+  .replace(/۱/g, "1")
+  .replace(/۲/g, "2")
+  .replace(/۳/g, "3")
+  .replace(/۴/g, "4")
+  .replace(/۵/g, "5")
+  .replace(/۶/g, "6")
+  .replace(/۷/g, "7")
+  .replace(/۸/g, "8")
+  .replace(/۹/g, "9")
+
+  return engNum
+  };
 
   function generateOrderId() {
     const timestamp = Date.now().toString();
@@ -39,15 +56,17 @@ const InformationSubmitted = (props) => {
     setShowInput(true);
   };
 
+
   const handleInputChange = (event) =>{
     event.preventDefault();
-    setAmount(parseInt(event.target.value));
-  }
-
-  const handleInputSubmit = () => {
-    setShowInput(false);
-    console.log(amount); // or use the value in another way
+    if (/^[\d\u06F0-\u06F9]+$/.test(event.target.value)) {
+      setAmount(toEnglish(event.target.value));
+    }else{
+      setAmount(parseInt(event.target.value));
+    }
   };
+
+ 
 
   const handlePayment = (event) => {
     event.preventDefault();
@@ -139,8 +158,8 @@ const InformationSubmitted = (props) => {
             <label className='dual-text' for="edit_amount" dir='rtl'>  مقدار برنج درخواستی: <span dir='ltr'>{fAmount} کیلوگرم <button className='edit_amount' onClick={handleButtonClick}>تغییر</button></span> </label>
             {showInput && (
               <div>
-                <input className='change-input' type="number" onChange={handleInputChange} />
-                <button className='change-but' onClick={handleInputSubmit}>ثبت</button>
+                <input className='change-input' dir='rtl' type="amount_num"  onChange={handleInputChange} />
+                {/* <button className='change-but' onClick={handleInputSubmit}>ثبت</button> */}
               </div>
             )}
             <button type="submit" className='submit_but' >صورتحساب</button>
