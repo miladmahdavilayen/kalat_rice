@@ -115,8 +115,9 @@ const Order = () => {
     <div>
         <div className='App'>
           <div className="container">
-
+            
             <h1 className='title'>برنج کلات (لاین)</h1>
+        
             <>
             {formSubmitted? (null):(<Link to="/info">
               <div className="price-tag-container" >

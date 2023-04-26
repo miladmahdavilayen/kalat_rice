@@ -19,9 +19,9 @@ const InformationSubmitted = (props) => {
   
   const riceCost = parseFloat(amount) * riceKgPrice;
   const totalPrice = deliveryCost + riceCost ;
-  const fRiceCost = (riceCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, 'تومان');
-  const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, 'تومان');
-  const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, 'تومان');
+  const fRiceCost = (riceCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
+  const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
+  const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
   const [orderId] = useState(generateOrderId());
 
   function generateOrderId() {
@@ -91,9 +91,10 @@ const InformationSubmitted = (props) => {
           <div>
               <h3  dir='rtl'> 
                 <h4 className='dual-text'>صورتحساب:</h4>
-                <h4 className='dual-text' >{amount} کیلوگرم برنج: <span> {fRiceCost}</span> </h4>
-                <h4 className='dual-text'>هزینه ارسال: <span>{fDeliveryCost}</span> </h4> 
-                <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice}</span></h4>
+                <h4 className='dual-text' >{amount} کیلوگرم برنج: <span> {fRiceCost} تومان</span> </h4>
+                <h4 className='dual-text'>روش دریافت: <span>دلیوری به آدرس</span> </h4> 
+                <h4 className='dual-text'>هزینه ارسال: <span>{fDeliveryCost} تومان</span> </h4> 
+                <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
               </h3>
               </div>
           <button type="submit">پرداخت</button>
@@ -108,9 +109,10 @@ const InformationSubmitted = (props) => {
             <div>
             <h3  dir='rtl'> 
               <h4 className='dual-text'>صورتحساب:</h4>
-              <h4 className='dual-text' >{amount} کیلوگرم برنج: <span> {fRiceCost}</span> </h4>
-              <h4 className='dual-text'>هزینه ارسال: <span>رایگان</span> </h4> 
-              <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice}</span></h4>
+              <h4 className='dual-text' >{amount} کیلوگرم برنج: <span> {fRiceCost} تومان</span> </h4>
+              <h4 className='dual-text'>روش دریافت: <span>دریافت در محل توزیع  </span> </h4> 
+              <h4 className='dual-text'>هزینه ارسال: <span>۰ تومان</span> </h4> 
+              <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
             </h3>
             </div>
             <button type="submit">پرداخت</button>
@@ -122,7 +124,7 @@ const InformationSubmitted = (props) => {
               <option value="deliver" dir='rtl'>برنج به آدرس من ارسال شود.</option>
               <option value="pick-up" dir='rtl'>برنج را در محل توزیع تحویل خواهم گرفت.</option>
             </select>
-            <button type="submit" className='submit_but'>ثبت خرید</button>
+            <button type="submit" className='submit_but'>صورتحساب</button>
           </form>)
       }
     </div>

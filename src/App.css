@@ -1,5 +1,5 @@
   /* General styles */
-
+  
 * {
 margin: 0;
 padding: 0;
@@ -14,6 +14,11 @@ src: url(../public/fonts/koodak.ttf);
 font-family: bassam;
 src: url(../public/fonts/bassam.ttf);
 }
+
+@font-face {
+  font-family: entezar;
+  src: url(../public/fonts/mesr.ttf);
+  }
 
 body {
 background-image: url("../public/rice.jpg");
@@ -314,7 +319,23 @@ footer {
   text-align: center;
   font-size: 48px;
   margin-top: 50px;
+  /* color: #e3732e; */
+  text-shadow: 1px 1px #f8f8f8;
+  animation: fade-in 1s ease-out;
+  font-family: entezar;
+
 }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .price-tag-container {
   position: absolute;
