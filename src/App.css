@@ -69,6 +69,8 @@ text-align: center;
   box-shadow: 2px 2px 5px #085d92;
   font-family: koodak;
   text-align: center;
+  height: 32px; /* Set a fixed height */
+  overflow: scroll; /* Enable scrolling */
   }
 
 .submit_but{
