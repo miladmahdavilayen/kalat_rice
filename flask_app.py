@@ -53,7 +53,7 @@ def verif_status():
             'location' : data['location'],
             'time_zone' : data['timezone'],
             'host_name' : data['hostname'],
-            # 'postal' : data['postal']
+            'postal' : data['postal']
             }
         name = data['name']
         en_name, f_name = name_to_fing(name)
