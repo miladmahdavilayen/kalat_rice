@@ -194,6 +194,17 @@ h6{
 
 .info{
   width: 90%;
+  text-align: justify;
+  padding: 1em;
+}
+
+.info-title{
+  background-color: rgba(26, 183, 29, 0.814);
+  color: #090715;
+  width: 50px;
+  margin-bottom: 2em;
+  padding-bottom: .5em;
+  
 }
 
 
