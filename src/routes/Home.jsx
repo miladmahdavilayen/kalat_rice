@@ -69,13 +69,7 @@ const Order = () => {
         setPhoneNumber('');
     }
 
-    // Validate email
-    // if (!email.trim()) {
-    //   errors.email = "لطفا نشانی ایمیل خود را وارد کنید";
-    // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    //   errors.email = "Email is not valid";
-    // }
-
+  
     // Validate address
     if (!address.trim()) {
       errors.address = "لطفا آدرس تحویل خود را وارد کنید";
@@ -100,7 +94,7 @@ const Order = () => {
       alert('کد تایید به شماره شما ارسال گردید. لطفا دکمه ok/close را بزنید.');
       alert(`عجالتا این کد خدمت شما: ${randNumber}  تا انشالا سامانه پیامکیمون راه بیفته..`)
       
-      console.log(`City: ${city}, Address: ${address}`);
+    
       axios.post('/submit-form', { fullName, email, phoneNumber, address, randNumber, city, amountToBuy});
       setFormSubmitted(true);
       

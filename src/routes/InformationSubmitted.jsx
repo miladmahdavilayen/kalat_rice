@@ -14,6 +14,7 @@ const InformationSubmitted = (props) => {
   const [riceKgPrice] = useState(1500000);
   const [deliveryCost, setDeliveryCost] = useState(0);
   const [showInput, setShowInput] = useState(false);
+  const [errors, setErrors] = useState({});
   
 
   
@@ -58,11 +59,23 @@ const InformationSubmitted = (props) => {
 
 
   const handleInputChange = (event) =>{
+
     event.preventDefault();
+    const errors = {};
     if (/^[\d\u06F0-\u06F9]+$/.test(event.target.value)) {
       setAmount(toEnglish(event.target.value));
-    }else{
+      setErrors({});
+    }else if (/^[0-9\b]+$/.test(event.target.value)){
       setAmount(parseInt(event.target.value));
+      setErrors({});
+    }else if (/^\s*$/.test(event.target.value)){
+      setAmount('')
+      setErrors({});
+    } else{
+      setAmount('');
+      errors.amount = ".لطفا فقط یک عدد وارد کنید.";
+      setErrors(errors);
+
     }
   };
 
@@ -158,7 +171,9 @@ const InformationSubmitted = (props) => {
             <label className='dual-text' for="edit_amount" dir='rtl'>  مقدار برنج درخواستی: <span dir='ltr'>{fAmount} کیلوگرم <button className='edit_amount' onClick={handleButtonClick}>تغییر</button></span> </label>
             {showInput && (
               <div>
+                {errors.amount && <div className="flash-message" dir="rtl">{errors.amount}</div>}
                 <input className='change-input' dir='rtl' type="amount_num"  onChange={handleInputChange} />
+                
                 {/* <button className='change-but' onClick={handleInputSubmit}>ثبت</button> */}
               </div>
             )}
