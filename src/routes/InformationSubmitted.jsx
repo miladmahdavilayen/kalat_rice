@@ -82,11 +82,10 @@ const InformationSubmitted = (props) => {
     } else{
       setAmount('');
       setStatus(false);
-      errors.amount = ".لطفا فقط یک عدد وارد کنید.";
+      errors.amount = "لطفا فقط یک عدد وارد کنید.";
       setErrors(errors);
 
     }
-    return changedAmountStatus;
   };
 
  
@@ -187,7 +186,7 @@ const InformationSubmitted = (props) => {
             {showInput && (
               <div>
                 {errors.amount && <div className="flash-message" dir="rtl">{errors.amount}</div>}
-                <input className='change-input' dir='rtl' type="amount_num"  onChange={handleInputChange} value={amount} />
+                <input className='change-input' dir='rtl' type="amount_num"  onChange={handleInputChange} />
                 
                 {/* <button className='change-but' onClick={handleInputSubmit}>ثبت</button> */}
               </div>
