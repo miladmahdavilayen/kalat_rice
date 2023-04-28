@@ -15,6 +15,7 @@ const InformationSubmitted = (props) => {
   const [deliveryCost, setDeliveryCost] = useState(0);
   const [showInput, setShowInput] = useState(false);
   const [errors, setErrors] = useState({});
+  const [changedAmountStatus, setStatus] = useState(true);
   
 
   
@@ -61,22 +62,31 @@ const InformationSubmitted = (props) => {
   const handleInputChange = (event) =>{
 
     event.preventDefault();
+    
     const errors = {};
     if (/^[\d\u06F0-\u06F9]+$/.test(event.target.value)) {
       setAmount(toEnglish(event.target.value));
+      setStatus(true);
       setErrors({});
+      
     }else if (/^[0-9\b]+$/.test(event.target.value)){
       setAmount(parseInt(event.target.value));
+      setStatus(true);
       setErrors({});
+      
     }else if (/^\s*$/.test(event.target.value)){
       setAmount('')
+      setStatus(false);
       setErrors({});
+      
     } else{
       setAmount('');
+      setStatus(false);
       errors.amount = ".لطفا فقط یک عدد وارد کنید.";
       setErrors(errors);
 
     }
+    return changedAmountStatus;
   };
 
  
@@ -96,22 +106,27 @@ const InformationSubmitted = (props) => {
   };
 
   const handleDeliveryMethod = (event) =>{
-    event.preventDefault(); 
-    setDeleMethodPicked(true);
-    if (option === 'pick-up'){
-      setDeliveryCost(0);
-    }else{
-      
-      if (parseFloat(amount) > 100){
-        const extraLoad = parseFloat(amount) - 100;
-        setDeliveryCost(2500000 + extraLoad * (50000));
-      }else{
-        setDeliveryCost(2500000);
-      } 
+    event.preventDefault();
+    const errors = {}; 
+    
+    if (changedAmountStatus) {
+      if (option === 'pick-up'){
+        setDeliveryCost(0);
+      } else {
+        if (parseFloat(amount) > 100){
+          const extraLoad = parseFloat(amount) - 100;
+          setDeliveryCost(2500000 + extraLoad * (50000));
+        }else{
+          setDeliveryCost(2500000);
+        } 
+      }
+      axios.post('/delivery-type', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
+      setDeleMethodPicked(true);
+    } else {
+      errors.amount = "لطفا در این قسمت فقط عدد وارد کنید."
+      setErrors(errors);
     }
     
-    axios.post('/delivery-type', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
-  
     };
 
   
@@ -172,7 +187,7 @@ const InformationSubmitted = (props) => {
             {showInput && (
               <div>
                 {errors.amount && <div className="flash-message" dir="rtl">{errors.amount}</div>}
-                <input className='change-input' dir='rtl' type="amount_num"  onChange={handleInputChange} />
+                <input className='change-input' dir='rtl' type="amount_num"  onChange={handleInputChange} value={amount} />
                 
                 {/* <button className='change-but' onClick={handleInputSubmit}>ثبت</button> */}
               </div>
