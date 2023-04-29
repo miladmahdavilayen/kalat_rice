@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
-
+import CustomerTable from './admin_page';
 import PhoneVerification from './PhoneVerification';
 
 const cities = [
@@ -25,11 +25,14 @@ const cities = [
 const Order = () => {
   const [city, setCity] = useState("مشهد");
   const [address, setAddress] = useState("");
+  const [showPwInput, setShowInput] = useState(null);
+  const [showAdmin, setShowAdmin] = useState(null);
 
   const [todayPrice] = useState((150).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, ''));
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [adminPwInput, setAdminPwInput] = useState('')
   
   const [amountToBuy, setAmountToBuy] = useState("");
   const [errors, setErrors] = useState({});
@@ -44,6 +47,16 @@ const Order = () => {
     setAddress(event.target.value);
   };
   
+
+  const handleAdminLogin = (event) =>{
+    event.preventDefault();
+    if (adminPwInput === "ramzadmin"){
+      setShowAdmin(true);
+
+    }else{
+      alert('admin pw is wrong');
+    }
+  }
   
   function handleFormSubmit(event) {
     
@@ -106,12 +119,20 @@ const Order = () => {
 
   return (
     <>
+    <div className='login'>
+        <button type='admin' className='admin-but' onClick={() => showPwInput? setShowInput(false): setShowInput(true)}>مدیریت</button>
+            {showPwInput && (
+              <div>
+                <input className='pw-input' dir='rtl' placeholder='رمز ورود را وارد کنید'  type="pw" onChange={(event) => setAdminPwInput(event.target.value)}/>
+                <button className='admin-submit' onClick={handleAdminLogin}>ثبت</button>
+              </div>)}
+    </div>
     <div>
         <div className='App'>
           <div className="container">
             <h1 className='title'>برنج کلات (لاین)</h1>
             <>
-            {formSubmitted? (null):(
+            {formSubmitted || showAdmin? (null):(
               <Link to="/info">
                 <div className="price-tag-container" >
                   <div className="price-tag">
@@ -123,7 +144,7 @@ const Order = () => {
           </div>
         </div> 
         <div>
-        {formSubmitted ? (<div>
+        {showAdmin? (<CustomerTable />): (formSubmitted ? (<div>
       
         <PhoneVerification phoneNumber={phoneNumber} personName={fullName} randomCode={randNumber} 
         amount={amountToBuy} address={address} email={email} city={city}
@@ -208,11 +229,14 @@ const Order = () => {
         />
       </div>
   <button type="submit">ثبت خرید</button>
+  
+  
 </form>
-    )}
+    ))}
   
 </div>
     </div>
+    
    
     </>
 

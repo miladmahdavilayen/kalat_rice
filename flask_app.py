@@ -179,6 +179,13 @@ def get_del_type():
 
 
 
+@app.route('/api/customers', methods=['GET'])
+def post_customers():
+    users = load_db()
+    customer_list = list(users.find({}, {"_id": 0}))
+    
+    return jsonify(customer_list)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
