@@ -569,21 +569,37 @@ footer {
   background-color: #156006;
 }
 
-
-
-.logout{
+.button-group{
+  display: inline-block;
+  margin-right: 10px;
   position: fixed;
   bottom: 50px;
   left: 15px;
+}
+
+.logout{
   padding: 10px;
   background-color: #f44336;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .logout:hover{
   background-color: #d32f2f;
 }
 
+
+.reload{
+  padding: 10px;
+  background-color: #1f65d4;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reload:hover{
+  background-color: #15338c;
+}
 
