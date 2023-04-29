@@ -226,7 +226,6 @@ h6{
 
 
 .return_button{
-  margin: 1em auto;
   background-color: #eca025;
   color: #110d0d;
   border: none;
@@ -237,6 +236,9 @@ h6{
   cursor: pointer;
   transition: background-color 0.2s ease;
   box-shadow: 2px 2px 5px #080808;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  
 }
 
 
@@ -334,8 +336,6 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
- 
-  
   text-align: center;
 }
 
