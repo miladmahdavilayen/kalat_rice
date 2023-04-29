@@ -432,7 +432,7 @@ footer {
   border-radius: 4px;
   box-shadow: 2px 2px 2px #201c1c;
   position: absolute;
-  top: 35%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -488,7 +488,6 @@ footer {
   display: flex;
   align-items: right;
   direction: rtl;
-  
 }
 
 .admin-but {

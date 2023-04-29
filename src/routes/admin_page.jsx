@@ -37,7 +37,7 @@ const CustomerTable = () => {
         <tr dir="rtl">
           <th dir="rtl">نام</th>
           <th dir="rtl">تلفن</th>
-          <th dir="rtl">آدرس</th>
+          <th dir="rtl">تاریخ ثبت</th>
           <th dir="rtl">خریدها</th>
         </tr>
       </thead>
@@ -51,14 +51,14 @@ const CustomerTable = () => {
             >
               <td> &nbsp;&nbsp; {customer.name}</td>
               <td>{customer.phone}</td>
-              <td>{customer.address}</td>
+              <td>{customer.date_registered}</td>
               <td>{selectedCustomerId === customer.name ? "▲" : "▼"}</td>
             </tr>
             {selectedCustomerId === customer.name &&
-              customer.orders.map((order) => (
-                <tr className="order-row" key={order.id}>
-                  <td colSpan="4" style={{fontSize: '10px'}}>
-                    initial amount: {order.initial_amount} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delivery type: {order.delivery_type} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; order time: {order.order_date_time} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tracking number: {order.order_id}
+              customer.orders.map((order, index) => (
+                <tr className="order-row" key={index+1}>
+                  <td colSpan="4" dir="rtl" style={{fontSize: '10px'}}>
+                  &nbsp;{index+1}-&nbsp;&nbsp; مقدار برنج: {order.final_amount} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; روش دریافت: {order.delivery_type} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; زمان ثبت سفارش: {order.order_date_time} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; کد رهگیری: {order.order_id}
                   </td>
                 </tr>
               ))}

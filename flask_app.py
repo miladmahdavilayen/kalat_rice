@@ -65,6 +65,7 @@ def verif_status():
         amount = data['amount']
         amount = num_to_eng(amount)
         delivery_city = data['deliveryCity']
+        register_date = get_current_time()
         
                 
         # build user and order info
@@ -88,8 +89,9 @@ def verif_status():
             'phone_verified': 'YES',
             'email': email_correct,
             'address': address,
-            'orders': [order],
-            'payment': 'Not Paid'
+            'payment': 'Not Paid',
+            'date_registered': register_date,
+            'orders': [order]
         }
         
         
