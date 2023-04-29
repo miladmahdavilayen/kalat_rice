@@ -57,7 +57,7 @@ const CustomerTable = () => {
             {selectedCustomerId === customer.name &&
               customer.orders.map((order) => (
                 <tr className="order-row" key={order.id}>
-                  <td colSpan="4">
+                  <td colSpan="4" style={{fontSize: '10px'}}>
                     initial amount: {order.initial_amount} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delivery type: {order.delivery_type} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; order time: {order.order_date_time} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tracking number: {order.order_id}
                   </td>
                 </tr>
