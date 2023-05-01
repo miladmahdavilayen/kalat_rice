@@ -78,7 +78,7 @@ const CustomerTable = () => {
                         &nbsp;{index + 1}-&nbsp;&nbsp; مقدار برنج:{" "}
                         {order.final_amount} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; روش
                         دریافت: {order.delivery_type} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        زمان ثبت سفارش: {order.order_date_time} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        زمان ثبت سفارش: <span dir='ltr'>{order.order_date_time}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         آدرس: {order.delivery_address} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         کد رهگیری: <span dir="ltr">{order.order_id}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         منطقه: {order.ip_info.region} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
