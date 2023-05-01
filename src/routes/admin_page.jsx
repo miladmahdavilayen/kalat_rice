@@ -56,18 +56,18 @@ const CustomerTable = () => {
           </thead>
           <tbody dir="rtl">
             {filteredCustomers.map((customer) => (
-              <React.Fragment key={customer.name}>
+              <React.Fragment key={customer.phone}>
                 <tr
                   className="customer-row"
                   dir="rtl"
-                  onClick={() => handleCustomerClick(customer.name)}
+                  onClick={() => handleCustomerClick(customer.phone)}
                 >
                   <td> &nbsp;&nbsp; {customer.name}</td>
                   <td>{customer.phone}</td>
                   <td>{customer.date_registered}</td>
-                  <td>{selectedCustomerId === customer.name ? "▲" : "▼"}</td>
+                  <td>{selectedCustomerId === customer.phone ? "▲" : "▼"}</td>
                 </tr>
-                {selectedCustomerId === customer.name &&
+                {selectedCustomerId === customer.phone &&
                   customer.orders.map((order, index) => (
                     <tr className="order-row" key={index + 1}>
                       <td
