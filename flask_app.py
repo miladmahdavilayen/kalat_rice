@@ -126,6 +126,8 @@ def verif_status():
                 existing_user['orders'].append(order)
                 users.update_one(name_querry, {"$set": {"orders": existing_user['orders']}})
                 logger.info(f"Order of {amount} for the EXISTING customer {en_name} is being processed.")
+            
+            # if number exists with a different name, update name
             else:
                 logger.info(f'''PHONE: {phone} has previously been registered using a different NAME. 
                             Although since the phone verification was successful, 
@@ -138,35 +140,12 @@ def verif_status():
                 existing_phone['orders'].append(order)
                 users.update_one(phone_querry, {"$set": {"orders": existing_phone['orders']}})
                 logger.info(f"Order of {amount} for the EXISTING phone number {phone} using a New name {en_name} is being processed.")
-                
+        
+        # if phone number doesn't exist, add as a new user
         else:
             users.insert_one(user)
             logger.info(f"Order of {amount} for BRAND NEW customer {en_name} is being processed.")
             
-                
-         
-        
-        # # old approach
-        # if existing_user:
-        #     if users.find_one({"$and": [name_querry, phone_querry]}):
-        #         logger.info(f"customer {en_name} info already in system")
-        #         existing_user['orders'].append(order)
-        #         users.update_one(name_querry, {"$set": {"orders": existing_user['orders']}})
-        #         logger.info(f"Order of {amount} for the EXISTING customer {en_name} is being processed.")
-        #     else:
-        #         logger.info(f"NAME: {en_name} is in the system with a different PHONE. Adding this one as a new user.")
-        #         users.insert_one(user)
-            
-        # else:
-        #     if existing_phone:
-        #         logger.info(f'''PHONE: {phone} is already in the system with a different NAME. 
-        #                     Although since the phone verification was successful, 
-        #                     Adding this one as a new customer too.''')
-        #         users.insert_one(user)
-        #         logger.info(f"Order of {amount} for the DOUBTEDLY NEW customer {en_name} is being processed.")
-        #     else:
-        #         users.insert_one(user)
-        #         logger.info(f"Order of {amount} for BRAND NEW customer {en_name} is being processed.")
                 
     else:
         logger.info(f"could not verify phone number..")

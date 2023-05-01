@@ -80,7 +80,9 @@ const CustomerTable = () => {
                         دریافت: {order.delivery_type} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         زمان ثبت سفارش: {order.order_date_time} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         آدرس: {order.delivery_address} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        کد رهگیری: <span dir="ltr">{order.order_id}</span>
+                        کد رهگیری: <span dir="ltr">{order.order_id}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        منطقه: {order.ip_info.region} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        سیتی: {order.ip_info.city}
                       </td>
                     </tr>
                   ))}
