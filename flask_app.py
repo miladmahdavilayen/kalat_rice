@@ -1,4 +1,7 @@
 from flask import Flask, request, jsonify, render_template, send_from_directory, flash, session
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 from database import Database, export_db, get_current_time
 from mongo_db import MongoDB
 import os
@@ -10,6 +13,13 @@ import ast
 from helper import *
 
 app = Flask(__name__, static_folder='./build/static', template_folder='./build')
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["60 per day", "10 per hour"],
+    storage_uri="memory://",
+)
 
 app.secret_key = 'testkey'
 
@@ -26,10 +36,11 @@ def index():
 
 
 @app.route('/submit-form', methods=['POST'])
+@limiter.limit("10 per day")
 def submit_form():
     data = request.json
     ename, _ = name_to_fing(data['fullName'])
-    logger.info(f"{ename}'s attempting to submit and order: {data}. Sending them the RandomCode. ")
+    logger.info(f"{ename}'s attempting to submit and order: {data}. Sending them OTP. ")
     # send verification code to customer
     random_code = data['randNumber']
     phone = data['phoneNumber']
@@ -45,6 +56,20 @@ def verif_status():
     # logger.info(data, 'here milad')
     if data:
         # validation and checks
+        name = data['name']
+        en_name, f_name = name_to_fing(name)
+        phone = data['phone']
+        phone = num_to_eng(phone)
+        email = data['email']
+        email_correct = is_valid_email(email)
+        address = data['address'].replace("\n", " ")
+        amount = data['amount']
+        amount = int(num_to_eng(amount))
+        delivery_city = data['deliveryCity']
+        register_date = get_current_time()
+                
+        # build user and order and IP dicts
+        
         ip_info = {
             'ip' : data['ip'],
             'city' : data['city'],
@@ -55,29 +80,16 @@ def verif_status():
             'host_name' : data['hostname'],
             'postal' : data['postal']
             }
-        name = data['name']
-        en_name, f_name = name_to_fing(name)
-        phone = data['phone']
-        phone = num_to_eng(phone)
-        email = data['email']
-        email_correct = is_valid_email(email)
-        address = data['address'].replace("\n", " ")
-        amount = data['amount']
-        amount = num_to_eng(amount)
-        delivery_city = data['deliveryCity']
-        register_date = get_current_time()
         
-                
-        # build user and order info
-        
-           
         order = {
             'order_id': '',
+            'name_used_for_this_order': name,
             'initial_amount': amount,
             'delivery_type': 'Not Selected',
-            'order_date_time': get_current_time(),
             'delivery_city': delivery_city,
             'delivery_address': address,
+            'order_date_time': get_current_time(),
+            'payment': 'Not Paid',
             'ip_info': ip_info
             }
         
@@ -88,12 +100,10 @@ def verif_status():
             'phone': phone,
             'phone_verified': 'YES',
             'email': email_correct,
-            'address': address,
-            'payment': 'Not Paid',
+            'first_address': address,
             'date_registered': register_date,
             'orders': [order]
         }
-        
         
         
         # load db
@@ -105,27 +115,58 @@ def verif_status():
         
         
         existing_user = users.find_one(name_querry)
+        existing_phone = users.find_one(phone_querry)
         
-        if existing_user:
+        # new approach
+        if existing_phone:
+            
+            # if the same exact customer is in db, just add to their orders
             if users.find_one({"$and": [name_querry, phone_querry]}):
-                logger.info(f"customer {en_name} info already in system")
+                logger.info(f"Info for {en_name} already exists in database. Adding a new order.")
                 existing_user['orders'].append(order)
                 users.update_one(name_querry, {"$set": {"orders": existing_user['orders']}})
                 logger.info(f"Order of {amount} for the EXISTING customer {en_name} is being processed.")
             else:
-                logger.info(f"NAME: {en_name} is in the system with a different PHONE. Adding this one as a new user.")
-                users.insert_one(user)
-            
-        else:
-            if users.find_one(phone_querry):
-                logger.info(f'''PHONE: {phone} is already in the system with a different NAME. 
+                logger.info(f'''PHONE: {phone} has previously been registered using a different NAME. 
                             Although since the phone verification was successful, 
-                            Adding this one as a new customer too.''')
-                users.insert_one(user)
-                logger.info(f"Order of {amount} for the DOUBTEDLY NEW customer {en_name} is being processed.")
-            else:
-                users.insert_one(user)
-                logger.info(f"Order of {amount} for BRAND NEW customer {en_name} is being processed.")
+                            updating their name to {en_name} now. You may still find 
+                            the old name that was used inside previous orders''')
+                
+                existing_phone['name'] = name
+                users.update_one(phone_querry, {"$set": {"name": existing_phone['name']}})
+                
+                existing_phone['orders'].append(order)
+                users.update_one(phone_querry, {"$set": {"orders": existing_phone['orders']}})
+                logger.info(f"Order of {amount} for the EXISTING phone number {phone} using a New name {en_name} is being processed.")
+                
+        else:
+            users.insert_one(user)
+            logger.info(f"Order of {amount} for BRAND NEW customer {en_name} is being processed.")
+            
+                
+         
+        
+        # # old approach
+        # if existing_user:
+        #     if users.find_one({"$and": [name_querry, phone_querry]}):
+        #         logger.info(f"customer {en_name} info already in system")
+        #         existing_user['orders'].append(order)
+        #         users.update_one(name_querry, {"$set": {"orders": existing_user['orders']}})
+        #         logger.info(f"Order of {amount} for the EXISTING customer {en_name} is being processed.")
+        #     else:
+        #         logger.info(f"NAME: {en_name} is in the system with a different PHONE. Adding this one as a new user.")
+        #         users.insert_one(user)
+            
+        # else:
+        #     if existing_phone:
+        #         logger.info(f'''PHONE: {phone} is already in the system with a different NAME. 
+        #                     Although since the phone verification was successful, 
+        #                     Adding this one as a new customer too.''')
+        #         users.insert_one(user)
+        #         logger.info(f"Order of {amount} for the DOUBTEDLY NEW customer {en_name} is being processed.")
+        #     else:
+        #         users.insert_one(user)
+        #         logger.info(f"Order of {amount} for BRAND NEW customer {en_name} is being processed.")
                 
     else:
         logger.info(f"could not verify phone number..")
@@ -157,6 +198,7 @@ def get_del_type():
     phone = num_to_eng(phone)
     
     rice_amount = data['amount']
+    rice_amount = int(num_to_eng(rice_amount))
     kg_price = data['riceKgPrice']
     delivery_cost = data['deliveryCost']
     total_charge = data['totalPrice']
