@@ -17,7 +17,7 @@ app = Flask(__name__, static_folder='./build/static', template_folder='./build')
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["60 per day", "10 per hour"],
+    default_limits=["60 per day", "100 per hour"],
     storage_uri="memory://",
 )
 
@@ -36,7 +36,7 @@ def index():
 
 
 @app.route('/submit-form', methods=['POST'])
-@limiter.limit("10 per day")
+@limiter.limit("1000 per day")
 def submit_form():
     data = request.json
     ename, _ = name_to_fing(data['fullName'])
