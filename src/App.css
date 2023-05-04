@@ -394,7 +394,7 @@ footer {
 .title {
   text-align: center;
   font-size: 48px;
-  margin-top: 35px;
+  margin-top: 25px;
   text-shadow: 1px 1px #f8f8f8;
   animation: fade-in 1s ease-out;
   font-family: entezar;
@@ -514,10 +514,11 @@ footer {
   
 /* admin login */
 .login {
-  position: absolute;
+  position:relative;
   top: 2px;
   right: 2px;
-  display: inline-flex;
+  justify-content: right;
+  display: flex;
   align-items: right;
   direction: rtl;
   
@@ -563,7 +564,7 @@ footer {
 }
 
 .pw-input {
-  width: 200px;
+  min-width: 130px;
   padding: 5px;
   margin-left: 2px;
   border: 1px solid #ced4da;
