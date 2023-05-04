@@ -4,6 +4,7 @@ import Home from "./routes/Home"
 import Info from "./routes/LayenRice"
 import Contact from "./routes/contacts"
 import About from "./routes/About"
+import Gallery from "./routes/gallary"
 
 
 import "./App.css"
@@ -17,6 +18,7 @@ const App = () => {
       <Route path="/" element={<Root />}>
         <Route index element={<Home />} />
         <Route path="/info" element={<Info />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
       </Route>

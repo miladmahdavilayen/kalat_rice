@@ -119,15 +119,25 @@ const Order = () => {
 
   return (
     <>{formSubmitted || showAdmin? (null):(
-    <div><div className='login'>
+    <div>
+      <div className='login'>
             <button type='admin' className='admin-but' onClick={() => showPwInput? setShowInput(false): setShowInput(true)}>مدیریت</button>
             {showPwInput && (
               <div>
                 <input type='password' className='pw-input' dir='rtl' placeholder='رمز ورود را وارد کنید'  onChange={(event) => setAdminPwInput(event.target.value)}/>
                 <button className='admin-submit' onClick={handleAdminLogin}>ثبت</button>
               </div>)}
-    </div>
-    <br/></div>)}
+      
+      <br/>
+      <div>
+        <Link to="/gallery">
+          <button className='gallery-but'>گالری</button>    
+        </Link>
+      </div>
+      </div>
+    
+    
+    </div>)}
     <div>
         <div className='App'>
           <div className="container">

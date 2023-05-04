@@ -517,7 +517,7 @@ footer {
   position: absolute;
   top: 2px;
   right: 2px;
-  display: flex;
+  display: inline-flex;
   align-items: right;
   direction: rtl;
   
@@ -539,6 +539,26 @@ footer {
 }
 
 .admin-but:hover {
+  background-color: #0062cc;
+}
+
+
+.gallery-but {
+  padding: 8px 16px;
+  font-size: 15px;
+  margin: 2px 5px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  box-shadow: 2px 2px 5px #23282c;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: vazir;
+}
+
+.gallery-but:hover {
   background-color: #0062cc;
 }
 
