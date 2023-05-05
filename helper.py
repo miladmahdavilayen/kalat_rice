@@ -163,7 +163,7 @@ def persian_date_to_farsi(date_str):
     farsi_day = "".join(persian_digits.get(digit, digit) for digit in day)
 
     # concatenate the Farsi year, month, and day with appropriate separators
-    farsi_date = f"{farsi_year} {farsi_month} {farsi_day}"
+    farsi_date = f"{farsi_day} {farsi_month} {farsi_year}"
 
     return farsi_date
 

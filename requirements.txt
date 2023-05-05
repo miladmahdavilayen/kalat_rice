@@ -6,3 +6,4 @@ kavenegar
 paramiko
 androidhelper
 persiantools
+pytz
