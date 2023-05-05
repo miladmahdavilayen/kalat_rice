@@ -15,7 +15,8 @@ function GetIp(props) {
     let hostname = '';
 
     // milad local ip address
-    axios.get("https://ipinfo.io/35.146.15.101/json?token=401cc3d28ca774")
+    // axios.get("https://ipinfo.io/35.146.15.101/json?token=401cc3d28ca774")
+    axios.get("https://ipinfo.io/35.146.15.101/json?token=401c")
       .then(response => {
         ip = response.data.ip;
         city = response.data.city;
