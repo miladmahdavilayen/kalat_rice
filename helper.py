@@ -13,9 +13,11 @@ def send_flash(m_type, message):
 
 
 def get_current_time():
-    current_time = time.localtime()
-    time_ = time.strftime("%H:%M:%S", current_time)
-    date_ = time.strftime("%Y-%m-%d", current_time)
+    utc_time = time.gmtime()
+    tehran_offset = 3.5 * 60 * 60
+    tehran_time = time.localtime(time.mktime(utc_time) + tehran_offset)
+    time_ = time.strftime("%H:%M:%S", tehran_time)
+    date_ = time.strftime("%Y-%m-%d", tehran_time)
     return f'{time_}_{date_}'
     
 
