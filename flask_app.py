@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template, send_from_directory,
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from database import Database, export_db, get_current_time
+# from database import Database, export_db, get_current_time
 from mongo_db import MongoDB
 import os
 import time
@@ -66,7 +66,7 @@ def verif_status():
         amount = data['amount']
         amount = int(num_to_eng(amount))
         delivery_city = data['deliveryCity']
-        register_date = get_current_time()
+        register_date = persian_date()
                 
         # build user and order and IP dicts
         

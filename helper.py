@@ -1,15 +1,25 @@
-import random
+import random, time, datetime
+from persiantools.jdatetime import JalaliDate
 import re
 from kavenegar import KavenegarAPI
+
+def persian_date():
+    return persian_date_to_farsi(str(JalaliDate.today()))
 
 
 def send_flash(m_type, message):
     print(f"{m_type}: {message}")
     pass
 
-def create_random_code():
-    return 4
-    pass
+
+def get_current_time():
+    current_time = time.localtime()
+    time_ = time.strftime("%H:%M:%S", current_time)
+    date_ = time.strftime("%Y-%m-%d", current_time)
+    return f'{time_}_{date_}'
+    
+
+
 
 def send_verif_code(random_gen, phone_num):
     pass
@@ -133,7 +143,31 @@ def num_to_eng(phone_number):
     else:
         return phone_number
     
+def persian_date_to_farsi(date_str):
+    # create a dictionary to map Persian digits to Farsi digits
+    persian_digits = {"0": "۰", "1": "۱", "2": "۲", "3": "۳", "4": "۴", "5": "۵", "6": "۶", "7": "۷", "8": "۸", "9": "۹"}
+
+    # create a list to map Persian month numbers to Farsi month names
+    persian_months = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]
+
+    # split the date string into year, month, and day
+    year, month, day = date_str.split("-")
+
+    # convert the year to Farsi digits
+    farsi_year = "".join(persian_digits.get(digit, digit) for digit in year)
+
+    # convert the month to Farsi digits and alphabet
+    farsi_month = persian_months[int(month)-1]
+
+    # convert the day to Farsi digits
+    farsi_day = "".join(persian_digits.get(digit, digit) for digit in day)
+
+    # concatenate the Farsi year, month, and day with appropriate separators
+    farsi_date = f"{farsi_year} {farsi_month} {farsi_day}"
+
+    return farsi_date
+
 
 
 if __name__ == "__main__":
-    pass
+    print(persian_date())
