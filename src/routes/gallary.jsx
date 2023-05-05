@@ -21,7 +21,7 @@ function Gallery() {
 
   return (
     <>
-    <h1>برنج لاین</h1>
+    <h1 className='title'>برنج لاین</h1>
     <div className="gallery">
       {images.map((image) => (
         <div key={image.id} className="gallery-item">
