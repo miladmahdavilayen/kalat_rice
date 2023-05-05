@@ -1,5 +1,5 @@
-import random, time, datetime
-from persiantools.jdatetime import JalaliDate
+import random, time, datetime, pytz
+from persiantools.jdatetime import JalaliDate, JalaliDateTime
 import re
 from kavenegar import KavenegarAPI
 
@@ -13,12 +13,14 @@ def send_flash(m_type, message):
 
 
 def get_current_time():
-    utc_time = time.gmtime()
-    tehran_offset = 3.5 * 60 * 60
-    tehran_time = time.localtime(time.mktime(utc_time) + tehran_offset)
-    time_ = time.strftime("%H:%M:%S", tehran_time)
-    date_ = time.strftime("%Y-%m-%d", tehran_time)
-    return f'{time_}_{date_}'
+    # get the current UTC time
+    utc_now = datetime.datetime.now(pytz.utc)
+
+    # add a 3.5 hour offset
+    offset = datetime.timedelta(hours=3.5)
+    local_time = utc_now + offset
+    tehran_time = local_time.strftime('%Y-%m-%d %H:%M:%S Tehran Time')
+    return tehran_time
     
 
 
@@ -172,4 +174,4 @@ def persian_date_to_farsi(date_str):
 
 
 if __name__ == "__main__":
-    print(persian_date())
+    print(get_current_time())
