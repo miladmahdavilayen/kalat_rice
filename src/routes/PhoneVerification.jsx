@@ -133,7 +133,7 @@ const PhoneVerification = (props) => {
       <form onSubmit={handleFormSubmit}>
       {errors.verificationCode && <div className="flash-message" dir="rtl">{errors.verificationCode}</div>}
       <div>
-        <label className='dual-text' htmlFor="verification-code" dir="rtl">لطفا کد تایید ارسال شده به {props.phoneNumber} را وارد کنید: <span dir='ltr'>زمان باقی مانده: {farsiCountDown} ثانیه</span></label>
+        <label className='dual-text' htmlFor="verification-code" dir="rtl">لطفا کد تایید ارسال شده به {props.phoneNumber} را وارد کنید: </label>
         <input
           dir="rtl"
           type="text"
@@ -142,6 +142,7 @@ const PhoneVerification = (props) => {
           value={verificationCode}
           onChange={(event) => setVerificationCode(event.target.value)}
         />
+        <div dir="rtl">زمان باقی مانده: {farsiCountDown} ثانیه</div>
       </div>
       <button type="submit">ارسال</button>
     </form>
