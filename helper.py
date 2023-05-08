@@ -33,6 +33,12 @@ def send_verif_code(random_gen, phone_num):
     # return response
 
 
+def send_message_dad(message_type="order submission"):
+    if message_type == "no payment":
+        pass
+    else:
+        pass
+
 
 
 def farsi_to_english(word):

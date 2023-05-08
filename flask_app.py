@@ -40,7 +40,7 @@ def index():
 def submit_form():
     data = request.json
     ename, _ = name_to_fing(data['fullName'])
-    logger.info(f"{ename}'s attempting to submit and order: {data}. Sending them OTP. ")
+    logger.info(f"{ename}'s attempting to submit an order: {data}. Sending them OTP. ")
     # send verification code to customer
     random_code = data['randNumber']
     phone = data['phoneNumber']
