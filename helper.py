@@ -4,7 +4,8 @@ import re
 from kavenegar import KavenegarAPI
 
 def persian_date():
-    return persian_date_to_farsi(str(JalaliDate.today()))
+    tehran_today = JalaliDateTime.now(pytz.timezone('Asia/Tehran')).strftime("%Y-%m-%d")
+    return persian_date_to_farsi(str(tehran_today))
 
 
 def send_flash(m_type, message):
@@ -180,4 +181,5 @@ def persian_date_to_farsi(date_str):
 
 
 if __name__ == "__main__":
-    print(get_current_time())
+    print(JalaliDate.today())
+    
