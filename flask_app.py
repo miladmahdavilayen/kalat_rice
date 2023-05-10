@@ -1,15 +1,15 @@
+import os
+import time
+from loguru import logger
+import json
+import ast
 from flask import Flask, request, jsonify, render_template, send_from_directory, flash, session
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 # from database import Database, export_db, get_current_time
 from mongo_db import MongoDB
-import os
-import time
-from loguru import logger
-import json
-import ast
-
+from gmail import send_message
 from helper import *
 
 app = Flask(__name__, static_folder='./build/static', template_folder='./build')
@@ -45,7 +45,8 @@ def submit_form():
     random_code = data['randNumber']
     phone = data['phoneNumber']
     phone = num_to_eng(phone)
-    send_verif_code(phone, random_code)    
+    send_verif_code(phone, random_code) 
+    send_message('miladatx@gmail.com', 'Order Attmept', f'user {ename} is attempting to submit a new order. Full Data: {data}')   
     return jsonify({'message': 'Form data inserted successfully!'})
 
 
