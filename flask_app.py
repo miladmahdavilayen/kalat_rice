@@ -198,7 +198,7 @@ def get_del_type():
     
    
     logger.info(f"Order ID {order_id} with a delivery choice of {del_type} submitted for {en_name}")
-    
+    send_message('miladatx@gmail.com', f'Order Submitted for {ename}', f'Full Data: {data}')
     return jsonify(data)
 
 
