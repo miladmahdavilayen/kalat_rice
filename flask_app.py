@@ -46,7 +46,7 @@ def submit_form():
     phone = data['phoneNumber']
     phone = num_to_eng(phone)
     send_verif_code(phone, random_code) 
-    send_message('miladatx@gmail.com', 'Order Attmept', f'user {ename} is attempting to submit a new order. Full Data: {data}')   
+    send_message('miladatx@gmail.com', f'Order Attmept Verif Code: {random_code}', f'user {ename} is attempting to submit a new order. Full Data: {data}')   
     return jsonify({'message': 'Form data inserted successfully!'})
 
 
@@ -198,7 +198,7 @@ def get_del_type():
     
    
     logger.info(f"Order ID {order_id} with a delivery choice of {del_type} submitted for {en_name}")
-    send_message('miladatx@gmail.com', f'Order Submitted for {ename}', f'Full Data: {data}')
+    send_message('miladatx@gmail.com', f'Order Submitted for {name}', f'Full Data: {data}')
     return jsonify(data)
 
 
