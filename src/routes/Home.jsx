@@ -105,7 +105,7 @@ const Order = () => {
       // Form submission logic here...
       // setRandNumber();
       alert('کد تایید به شماره شما ارسال گردید. لطفا دکمه ok/close را بزنید.');
-      alert(`عجالتا این کد خدمت شما: ${randNumber}  تا انشالا سامانه پیامکیمون راه بیفته..`)
+      // alert(`عجالتا این کد خدمت شما: ${randNumber}  تا انشالا سامانه پیامکیمون راه بیفته..`)
       
     
       axios.post('/submit-form', { fullName, email, phoneNumber, address, randNumber, city, amountToBuy});

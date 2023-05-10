@@ -26,12 +26,12 @@ def get_current_time():
 
 
 
-def send_verif_code(random_gen, phone_num):
-    pass
-    # api = KavenegarAPI('6747713838396F6B49306438394E73624F48366F4D656B36356B73717969386842697453307274597668303D')
-    # params = { 'sender' : '09153820062', 'receptor': f'{phone_num}', 'message' :f'{random_gen}' }
-    # response = api.sms_send( params)
-    # return response
+def send_verif_code(phone_num, random_gen):
+    api = KavenegarAPI('6747713838396F6B49306438394E73624F48366F4D656B36356B73717969386842697453307274597668303D')
+    # params = { 'sender' : '1000777077707', 'receptor': f'{phone_num}', 'message' :f'{random_gen}' }
+    params = { 'receptor': f'{phone_num}', 'token': {random_gen}, 'template' :'verify' }
+    response = api.verify_lookup( params)
+    return response
 
 
 def send_message_dad(message_type="order submission"):
@@ -181,5 +181,5 @@ def persian_date_to_farsi(date_str):
 
 
 if __name__ == "__main__":
-    print(JalaliDate.today())
+    send_verif_code("09386401018", "252525", "verify")
     
