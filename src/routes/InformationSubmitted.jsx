@@ -22,9 +22,9 @@ const InformationSubmitted = (props) => {
   
   const riceCost = parseFloat(amount) * riceKgPrice;
   const totalPrice = deliveryCost + riceCost ;
-  const fRiceCost = (riceCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
-  const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
-  const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '');
+  const fRiceCost = (riceCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '').replace(/٬/g, ',');
+  const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '').replace(/٬/g, ',');
+  const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '').replace(/٬/g, ',');
   const fAmount = (parseFloat(amount)).toLocaleString('fa');
   const [orderId] = useState(generateOrderId());
 
@@ -179,7 +179,7 @@ const InformationSubmitted = (props) => {
           )):(<form onSubmit={handleDeliveryMethod}>
             <label for="del_method" dir='rtl'>مشتری عزیز، شماره همراه شما تایید گردید.<br/>لطفا نحوه دریافت برنج کلات را مشخص نمایید: </label>
             <select name="del_method" id="del_method" dir='rtl' className='select' onChange={handleOptions}>
-              <option value="deliver" dir='rtl'>برنج به آدرس من ارسال شود.</option>
+              <option value="deliver" dir='rtl'>برنج به آدرس من ارسال شود. (ارسال رایگان برای ۱۰۰ کیلو به بالا)</option>
               <option value="pick-up" dir='rtl'>برنج را در محل توزیع تحویل خواهم گرفت.</option>
             </select>
             <label className='dual-text' for="edit_amount" dir='rtl'>  مقدار برنج درخواستی: <span dir='ltr'>{fAmount} کیلوگرم <button className='edit_amount' onClick={handleButtonClick}>تغییر</button></span> </label>

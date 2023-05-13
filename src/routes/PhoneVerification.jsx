@@ -38,7 +38,7 @@ return fNum
 
 const PhoneVerification = (props) => {
   
-  
+  const [timeColor, setTimeColor] = useState('blue');
   const random_code = props.randomCode
   const name = props.personName;
   const phone = props.phoneNumber;
@@ -62,6 +62,9 @@ const PhoneVerification = (props) => {
         setCountdown(prevCountdown => prevCountdown - 1);
         setFarsiCountDown(toFarsi(countdown));
       }, 1000);
+      if (countdown === 15) {
+        setTimeColor('red');
+      }
       if (countdown === 0) {
         stopProcess();
       }
@@ -142,7 +145,7 @@ const PhoneVerification = (props) => {
           value={verificationCode}
           onChange={(event) => setVerificationCode(event.target.value)}
         />
-        <div dir="rtl">زمان باقی مانده: {farsiCountDown} ثانیه</div>
+        <div dir="rtl">زمان باقی مانده: <span style={{'color': timeColor}}>{farsiCountDown}</span> ثانیه</div>
       </div>
       <button type="submit">ارسال</button>
     </form>

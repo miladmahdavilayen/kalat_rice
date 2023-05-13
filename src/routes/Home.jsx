@@ -141,7 +141,9 @@ const Order = () => {
     <div>
         <div className='App'>
           <div className="container">
-            <h1 className='title'>برنج کلات (لاین)</h1>
+            <h1 className='title'>برنج کلات (لاین)
+            <span className='ersal'>ارسال رایگان</span></h1>
+            
             <>
             {formSubmitted || showAdmin? (null):(
               <Link to="/info">

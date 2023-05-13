@@ -626,3 +626,14 @@ footer {
   background-color: #15338c;
 }
 
+.ersal {
+  position: absolute;
+  top: 20px;
+  transform: rotate(45deg);
+  font-size: 18px;
+  color: #dbb718;
+  font-weight: bold;
+  text-shadow: 1.5px 1.5px #0c0404;
+  
+  
+}
