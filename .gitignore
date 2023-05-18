@@ -26,3 +26,4 @@ yarn-error.log*
 users.db
 db_outputs/
 gs.sh
+gmail_auth_keys/token.json
