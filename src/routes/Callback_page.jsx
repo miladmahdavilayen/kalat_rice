@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 // Define your callback component
-const PaymentCallback = async() => {
+const PaymentCallback = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
@@ -13,7 +13,8 @@ const PaymentCallback = async() => {
     const status = queryParams.get('Status');
 
     try {
-        const response = await axios.post('/verify-payment', { status, auth_code});
+        const response = axios.post('/verify-payment', { status, auth_code});
+        console.log(response)
         // wait for 1 seconds
         // await new Promise(resolve => setTimeout(resolve, 1000));
         

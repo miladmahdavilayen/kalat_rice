@@ -248,9 +248,8 @@ def verify_rayanpay():
         
         return jsonify(response)
         
-         
-    logger.info(response)
-    return jsonify(response)
+    
+    return jsonify(data)
 
 
 @app.route('/api/customers', methods=['GET'])
