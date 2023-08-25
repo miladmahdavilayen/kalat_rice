@@ -251,7 +251,8 @@ def verify_rayanpay():
         # auth_querry = {'orders.rayanpay_auth':f'{auth_code}'}
         existing_user = users.find_one(auth_querry)
         amount = existing_user['orders'][-1]['total_charge']
-        
+        logger.info(f'testing whether it has found the right user and total charge: {amount}')
+
         response = verif_successfull_pay(auth_code, int(amount))
         
         data = json.loads(response) 

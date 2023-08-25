@@ -40,7 +40,7 @@ const PaymentCallback = () => {
     return (
         <div>
             <h1>وضعیت پرداخت</h1>
-            <h2 dir='ltr'>{message}</h2>
+            <h2 >{message}</h2>
         </div>
     );
 };
