@@ -26,7 +26,7 @@ const PaymentCallback = () => {
     return (
         <div>
             <h1>Payment Callback Page</h1>
-            <p>{message}</p>
+            <h2 dir='ltr'>{message}</h2>
         </div>
     );
 };

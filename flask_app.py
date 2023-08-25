@@ -24,6 +24,11 @@ limiter = Limiter(
 
 app.secret_key = 'testkey'
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template('index.html')
+
 
 def load_db():
     mdb = MongoDB('mahdavi-rice-db', 'users')
