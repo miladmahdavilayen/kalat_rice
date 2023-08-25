@@ -6,6 +6,7 @@ import ast
 from flask import Flask, request, jsonify, render_template, send_from_directory, flash, session
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from rayanpay import *
 
 # from database import Database, export_db, get_current_time
 from mongo_db import MongoDB
@@ -45,7 +46,7 @@ def submit_form():
     random_code = data['randNumber']
     phone = data['phoneNumber']
     phone = num_to_eng(phone)
-    send_verif_code(phone, random_code) 
+    # send_verif_code(phone, random_code) 
     send_message('miladatx@gmail.com', f'Order Attmept Verif Code: {random_code}', f'user {ename} is attempting to submit a new order. Full Data: {data}')   
     return jsonify({'message': 'Form data inserted successfully!'})
 
@@ -202,6 +203,19 @@ def get_del_type():
     return jsonify(data)
 
 
+@app.route('/payment-page', methods=['POST'])
+def send_infoto_rayanpay():
+    data = request.json
+    name = data['name']
+    order_id = data['orderId']
+    phone = data['phone']
+    amount = data['totalPrice']
+    email = "no email for now"
+    logger.info(f"amount {amount} phone {phone} name {name} ord_id {order_id}" )
+    response = send_payment(amount, name, phone, order_id, email)  
+    logger.info(response)
+    return jsonify(response)
+
 
 @app.route('/api/customers', methods=['GET'])
 def post_customers():
@@ -209,6 +223,8 @@ def post_customers():
     customer_list = list(users.find({}, {"_id": 0}))
     
     return jsonify(customer_list)
+
+
 
 
 if __name__ == '__main__':

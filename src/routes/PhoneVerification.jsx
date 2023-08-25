@@ -53,7 +53,6 @@ const PhoneVerification = (props) => {
   const [isVerified, setIsVerified] = useState(false);
   const [riceAmount, setRiceAmount] = useState(0)
   
-  
   const [countdown, setCountdown] = useState(150);
   const [stopVerifProcess, setStopVerifProcess] = useState(null);
   const [farsiCountDown, setFarsiCountDown] = useState(toFarsi(countdown))
@@ -87,8 +86,6 @@ const PhoneVerification = (props) => {
     event.preventDefault();
 
     const errors = {};
-
-    
 
     if (/^[\d\u06F0-\u06F9]+$/.test(amount)) { 
       setRiceAmount(toEnglish(amount));
@@ -135,20 +132,24 @@ const PhoneVerification = (props) => {
     ) : (
       <form onSubmit={handleFormSubmit}>
       {errors.verificationCode && <div className="flash-message" dir="rtl">{errors.verificationCode}</div>}
+      <label className='dual-text' htmlFor="verification-code" dir="rtl">لطفا کد تایید ارسال شده به {props.phoneNumber} را وارد کنید: </label>
       <div>
-        <label className='dual-text' htmlFor="verification-code" dir="rtl">لطفا کد تایید ارسال شده به {props.phoneNumber} را وارد کنید: </label>
-        <input
-          dir="rtl"
-          type="text"
-          id="verification-code"
-          name="verification-code"
-          value={verificationCode}
-          onChange={(event) => setVerificationCode(event.target.value)}
-        />
-        <div dir="rtl">زمان باقی مانده: <span style={{'color': timeColor}}>{farsiCountDown}</span> ثانیه</div>
+        <div>
+          <input
+            dir="rtl"
+            type="text"
+            id="verification-code"
+            name="verification-code"
+            value={verificationCode}
+            onChange={(event) => setVerificationCode(event.target.value)}
+          />
+          <div dir="rtl">زمان باقی مانده: <span style={{'color': timeColor}}>{farsiCountDown}</span> ثانیه</div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}><button type="submit">ثبت</button><span dir='rtl'><button className='edit_amount' onClick={() => window.location.reload()}> بازگشت به اول</button></span></div>
       </div>
-      <button type="submit">ارسال</button>
+      
     </form>
+    
 ))
 }
     </div>

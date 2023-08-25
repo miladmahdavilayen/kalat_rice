@@ -5,6 +5,7 @@ import Info from "./routes/LayenRice"
 import Contact from "./routes/contacts"
 import About from "./routes/About"
 import Gallery from "./routes/gallary"
+import Callback from './routes/Callback_page';
 
 
 import "./App.css"
@@ -21,6 +22,8 @@ const App = () => {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/payment-callback" element={<Callback />} />
+
       </Route>
     )
   )

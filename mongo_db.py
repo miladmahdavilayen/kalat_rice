@@ -1,7 +1,6 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-    
 
 class MongoDB():
     uri = "mongodb+srv://miladmahdavilayen:HKM0HHN8UfDJPb0s@miladcluster.u4hs6ts.mongodb.net/?retryWrites=true&w=majority"

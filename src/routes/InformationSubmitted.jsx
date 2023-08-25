@@ -90,11 +90,31 @@ const InformationSubmitted = (props) => {
 
  
 
-  const handlePayment = (event) => {
+  const handlePayment = async (event) => {
     event.preventDefault();
     setPayment(true);
+
     
-  }
+    try {
+        const response = await axios.post('/payment-page', { name, orderId, phone, totalPrice });
+        
+        // wait for 5 seconds
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        const parsedResponse = JSON.parse(response.data);
+        const authorityValue = parsedResponse.authority;
+        const baseUrl = 'https://pms.rayanpay.com/pg/startpay/';
+        
+        const constructedUrl = baseUrl + authorityValue;
+        
+        // Redirect to the constructed URL
+        window.location.href = constructedUrl;
+
+        // Handle the response here or update your component state
+    } catch (error) {
+        console.error('Error making payment:', error);
+    }
+};
 
   const handleOptions = (event) => {
     event.preventDefault();
