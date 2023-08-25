@@ -4,13 +4,10 @@ import json
 
 
 
-def send_payment(amount, name, phone, order_id, email):
+def send_payment(amount, name, phone, order_id, email): 
     body = {'merchantID': '3eaf3be0-36ec-40fc-8bdd-830d9e46c4e4', 'amount': amount,
         'description': f'{{"name": "{name}", "code": "{order_id}"}}' ,'email': email,
-        'mobile': f'98{phone[1:]}',  'callBackURL':'http://127.0.0.1:5000/payment-callback/'}
-    # body = {'merchantID': '3eaf3be0-36ec-40fc-8bdd-830d9e46c4e4', 'amount': 10000,
-    #     'description': f'{{"name": "{name}", "code": "{order_id}"}}' ,'email': email,
-    #     'mobile': f'98{phone[1:]}',  'callBackURL':'https://mahdavi-rice.com/payment-callback/'}
+        'mobile': f'98{phone[1:]}',  'callBackURL':'https://mahdavi-rice.com/payment-callback/'}
     
     headers =  {"Content-Type":"application/json"}
     
