@@ -14,7 +14,9 @@ const PaymentCallback = () => {
 
     try {
         const response = axios.post('/verify-payment', { status, auth_code});
-        console.log(response)
+        const parsedResponse = JSON.parse(response.data);
+        alert(parsedResponse.Status)
+        alert(parsedResponse.RefID)
         // wait for 1 seconds
         // await new Promise(resolve => setTimeout(resolve, 1000));
         
