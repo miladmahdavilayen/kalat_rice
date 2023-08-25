@@ -71,7 +71,7 @@ def verif_status():
         email_correct = is_valid_email(email)
         address = data['address'].replace("\n", " ")
         amount = data['amount']
-        amount = int(num_to_eng(amount))
+        amount = num_to_eng(amount)
         delivery_city = data['deliveryCity']
         register_date = persian_date()
                 
@@ -184,7 +184,7 @@ def get_del_type():
     phone = num_to_eng(phone)
     
     rice_amount = data['amount']
-    rice_amount = int(num_to_eng(rice_amount))
+    rice_amount = num_to_eng(rice_amount)
     kg_price = data['riceKgPrice']
     delivery_cost = data['deliveryCost']
     total_charge = data['totalPrice']
@@ -219,8 +219,8 @@ def send_infoto_rayanpay():
     logger.info(f"amount {amount} phone {phone} name {name} ord_id {order_id}" )
     response = send_payment(amount, name, phone, order_id, email)  
     auth_code = json.loads(response)['authority']
-    users = load_db()
     
+    users = load_db()
     name_querry = {'name':f'{name}'}
     phone_querry = {'phone': f'{phone}'}
     name_phone_match = {"$and": [name_querry, phone_querry]}
