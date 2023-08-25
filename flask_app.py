@@ -241,9 +241,17 @@ def verify_rayanpay():
     
     if status == 'OK':
         users = load_db()
-        auth_querry = {'orders.rayanpay_auth':f'{auth_code}'}
+        auth_querry = {
+            "orders": {
+                "$elemMatch": {
+                    "rayanpay_auth": auth_code
+                }
+            }
+        }
+        # auth_querry = {'orders.rayanpay_auth':f'{auth_code}'}
         existing_user = users.find_one(auth_querry)
         amount = existing_user['orders'][-1]['total_charge']
+        
         response = verif_successfull_pay(auth_code, int(amount))
         
         data = json.loads(response) 
