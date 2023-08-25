@@ -218,6 +218,37 @@ def send_infoto_rayanpay():
     email = "no email for now"
     logger.info(f"amount {amount} phone {phone} name {name} ord_id {order_id}" )
     response = send_payment(amount, name, phone, order_id, email)  
+    auth_code = json.loads(response)['authority']
+    users = load_db()
+    
+    name_querry = {'name':f'{name}'}
+    phone_querry = {'phone': f'{phone}'}
+    name_phone_match = {"$and": [name_querry, phone_querry]}
+    existing_user = users.find_one(name_phone_match)
+    new_val = {'rayanpay_auth': auth_code }
+    existing_user['orders'][-1].update(new_val)
+    users.update_one(name_phone_match, {"$set": {"orders": existing_user['orders']}})
+    
+    logger.info(response)
+    return jsonify(response)
+
+
+@app.route('/verify-payment', methods=['POST'])
+def verify_rayanpay():
+    data = request.json
+    status = data['status']
+    auth_code = data['auth_code']
+    
+    if status == 'OK':
+        users = load_db()
+        auth_querry = {'rayanpay_auth':f'{name}'}
+        existing_user = users.find_one(auth_querry)
+        amount = existing_user['orders'][-1]['total_charge']
+        response = verif_successfull_pay(auth_code, amount)  
+        
+        return jsonify(response)
+        
+         
     logger.info(response)
     return jsonify(response)
 
