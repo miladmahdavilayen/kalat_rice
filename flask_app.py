@@ -241,7 +241,7 @@ def verify_rayanpay():
     
     if status == 'OK':
         users = load_db()
-        auth_querry = {'rayanpay_auth':f'{name}'}
+        auth_querry = {'rayanpay_auth':f'{auth_code}'}
         existing_user = users.find_one(auth_querry)
         amount = existing_user['orders'][-1]['total_charge']
         response = verif_successfull_pay(auth_code, amount)  
