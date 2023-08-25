@@ -244,7 +244,15 @@ def verify_rayanpay():
         auth_querry = {'rayanpay_auth':f'{auth_code}'}
         existing_user = users.find_one(auth_querry)
         amount = existing_user['orders'][-1]['total_charge']
-        response = verif_successfull_pay(auth_code, amount)  
+        response = verif_successfull_pay(auth_code, int(amount))
+        data = json.loads(response) 
+        final_status = data['status'] 
+        ref_id = data['refID'] 
+        card_holder_pan = data['cardHolderPan']
+        bank_hash = data['bankCardHash']
+        
+        new_val = {'payment': 'PAID', 'ref_id': ref_id, 'card_holder_pan': card_holder_pan, 'bank_hash': bank_hash }
+        existing_user['orders'][-1].update(new_val)
         
         return jsonify(response)
         
