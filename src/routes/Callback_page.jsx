@@ -15,7 +15,7 @@ const PaymentCallback = async() => {
     try {
         const response = await axios.post('/verify-payment', { status, auth_code});
         // wait for 1 seconds
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // await new Promise(resolve => setTimeout(resolve, 1000));
         
     } catch (error) {
         console.error('Error making payment:', error);
