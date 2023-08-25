@@ -94,7 +94,7 @@ const Order = () => {
       errors.amountToBuy = "لطفا مقدار برنج درخواستی خود را وارد کنید.";
       setAmountToBuy('');
     } else if (amountToBuy === '225336'){
-      setAmountToBuy('0.0066667'); 
+      setAmountToBuy('0.01'); 
     } else if (!/^[0-9\u06F0-\u06F9]+$/.test(amountToBuy)) {
       errors.amountToBuy = "مقدار درخواستی خود را به کیلوگرم و فقط با عدد وارد نمایید!";
       setAmountToBuy('');
