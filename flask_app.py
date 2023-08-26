@@ -282,9 +282,27 @@ def post_customers():
 
 
 
+def test_f():
+    users = load_db()
+    auth_querry = {
+        "orders": {
+            "$elemMatch": {
+                "rayanpay_auth": "b957b58d-ae3d-40f1-93dc-2de578125f48"
+            }
+        }
+    }
+    # auth_querry = {'orders.rayanpay_auth':f'{auth_code}'}
+    existing_user = users.find_one(auth_querry)
+    amount = existing_user['orders'][-1]['total_charge']
+    logger.info(f'testing whether it has found the right user and total charge: {amount}')
+    response = verif_successfull_pay("b957b58d-ae3d-40f1-93dc-2de578125f48", int(amount))
+    logger.info(response)
+    
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    test_f()
     
     
     
