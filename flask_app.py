@@ -260,17 +260,17 @@ def verify_rayanpay():
         card_holder_pan = data['cardHolderPan']
         bank_hash = data['bankCardHash']
         
-        
+     
         if final_status == 100:
-            new_val = {'payment': 'PAID', 'ref_id': ref_id, 'card_holder_pan': card_holder_pan, 'bank_hash': bank_hash }
+            new_val = {'payment': 'PAID', 'ref_id': ref_id,
+                        'card_holder_pan': card_holder_pan,
+                        'bank_hash': bank_hash, 'final_status': final_status}
             existing_user['orders'][-1].update(new_val)
+            users.update_one(auth_querry, {"$set": {"orders": existing_user['orders']}})
         
     return jsonify(response)
         
         
-        
-    
-    return jsonify(data)
 
 
 @app.route('/api/customers', methods=['GET'])
@@ -287,7 +287,7 @@ def post_customers():
 #     auth_querry = {
 #         "orders": {
 #             "$elemMatch": {
-#                 "rayanpay_auth": "b957b58d-ae3d-40f1-93dc-2de578125f48"
+#                 "rayanpay_auth": "66fe1e4b-6d56-491c-90a0-7c572b50c456"
 #             }
 #         }
 #     }
@@ -295,7 +295,7 @@ def post_customers():
 #     existing_user = users.find_one(auth_querry)
 #     amount = existing_user['orders'][-1]['total_charge']
 #     logger.info(f'testing whether it has found the right user and total charge: {amount}')
-#     response = verif_successfull_pay("b504bb25-9a3d-433c-9635-fda363503f49", int(amount))
+#     response = verif_successfull_pay("66fe1e4b-6d56-491c-90a0-7c572b50c456", int(amount))
 #     logger.info(f'heres the raw response after verifL {response}')
     
 #     data = json.loads(response) 
@@ -303,6 +303,11 @@ def post_customers():
 #     ref_id = data['refID'] 
 #     card_holder_pan = data['cardHolderPan']
 #     bank_hash = data['bankCardHash']
+#     if final_status == 100:
+#             print('condition met')
+#             new_val = {'payment': 'PAID', 'ref_id': ref_id, 'card_holder_pan': card_holder_pan, 'bank_hash': bank_hash }
+#             existing_user['orders'][-1].update(new_val)
+#             users.update_one(auth_querry, {"$set": {"orders": existing_user['orders']}})
     
 #     print(f'jsonified data: {data}', type(data))
 #     print(f'final status: {final_status}', type(final_status))

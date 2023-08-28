@@ -6,7 +6,7 @@ const PaymentCallback = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
-    const successMessage = 'پرداخت شما با موفقیت انجام شد. به زودی با شما تماس خواهیم گرفت. با تشکرو برنج لاین!';
+    const successMessage = 'پرداخت شما با موفقیت انجام شد. به زودی با شما تماس خواهیم گرفت. با تشکر.. برنج لاین!';
     const failureMessage = 'پرداخت انجام نشد. لطفا مجددا تلاش کنید!';
     const unknownMessage = 'وضعیت پرداخت نامعلوم.';
 
