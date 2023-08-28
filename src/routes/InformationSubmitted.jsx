@@ -101,7 +101,6 @@ const InformationSubmitted = (props) => {
 
     
     try {
-
         await axios.post('/submit-initial', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
         const response = await axios.post('/payment-page', { name, orderId, phone, totalPrice });
         
