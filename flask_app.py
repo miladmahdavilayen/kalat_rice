@@ -173,7 +173,7 @@ def get_del_option():
 
 
 
-@app.route('/delivery-type', methods=['POST'])
+@app.route('/submit-initial', methods=['POST'])
 def get_del_type():
     data = request.json
     name = data['name']

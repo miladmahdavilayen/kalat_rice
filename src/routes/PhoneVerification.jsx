@@ -126,7 +126,7 @@ const PhoneVerification = (props) => {
           <div>
             <>
             <GetIp name={name} phone={phone} address={address} email={email} amount={amount} city={city}/>
-            <InformationSubmitted personName={name} phone={phone} amount={riceAmount} email={email} address={address} />
+            <InformationSubmitted personName={name} phone={phone} amount={riceAmount} email={email} address={address} city={city} />
             </>
         </div>
     ) : (

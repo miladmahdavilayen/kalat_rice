@@ -5,9 +5,10 @@ import axios from 'axios';
 
 const InformationSubmitted = (props) => {
   const name = props.personName;
+  const city = props.city;
   const [amount, setAmount] = useState(props.amount);
   const phone = props.phone;
-
+  const deliveryMessage = ((city === 'مشهد')? '( ارسال رایگان برای ۱۰۰ کیلوگرم به بالا در مشهد)' : '')
   const [option, setOption] = useState('deliver');
   const [payment, setPayment] = useState(null);
   const [delMethodPicked, setDeleMethodPicked] = useState(null);
@@ -16,9 +17,7 @@ const InformationSubmitted = (props) => {
   const [showInput, setShowInput] = useState(false);
   const [errors, setErrors] = useState({});
   const [changedAmountStatus, setStatus] = useState(true);
-  
 
-  
   
   const riceCost = parseFloat(amount) * riceKgPrice;
   const totalPrice = deliveryCost + riceCost ;
@@ -27,6 +26,7 @@ const InformationSubmitted = (props) => {
   const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '').replace(/٬/g, ',');
   const fAmount = (parseFloat(amount)).toLocaleString('fa');
   const [orderId] = useState(generateOrderId());
+
 
   const toEnglish = (farsiNum) =>{
     const engNum = farsiNum
@@ -58,6 +58,10 @@ const InformationSubmitted = (props) => {
     setShowInput(true);
   };
 
+  const backToDel = (event) => {
+    event.preventDefault();
+    setDeleMethodPicked(null);
+  };
 
   const handleInputChange = (event) =>{
 
@@ -96,6 +100,8 @@ const InformationSubmitted = (props) => {
 
     
     try {
+
+        await axios.post('/submit-initial', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
         const response = await axios.post('/payment-page', { name, orderId, phone, totalPrice });
         
        
@@ -125,19 +131,26 @@ const InformationSubmitted = (props) => {
   const handleDeliveryMethod = (event) =>{
     event.preventDefault();
     const errors = {}; 
-    
     if (changedAmountStatus) {
       if (option === 'pick-up'){
         setDeliveryCost(0);
-      } else {
-        if (parseFloat(amount) > 100){
-          const extraLoad = parseFloat(amount) - 100;
-          setDeliveryCost(2500000 + extraLoad * (50000));
+      }else{
+        if (city === 'مشهد'){
+          if (parseFloat(amount) > 94){
+            setDeliveryCost(0);
+          }else{
+            setDeliveryCost(1000000);
+          }
         }else{
-          setDeliveryCost(2500000);
+          if (parseFloat(amount) > 200){
+            const extraLoad = parseFloat(amount) - 200;
+            setDeliveryCost(10000000 + extraLoad * (50000));
+          }else{
+            setDeliveryCost(10000000);
+          } 
         } 
       }
-      axios.post('/delivery-type', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
+      
       setDeleMethodPicked(true);
     } else {
       errors.amount = "لطفا در این قسمت فقط عدد وارد کنید."
@@ -153,7 +166,7 @@ const InformationSubmitted = (props) => {
       { payment? (
       <>
       <h2 dir='rtl'>در حال بارگذاری صفحه پرداخت...</h2>
-      
+      <img src="/static/media/loading.gif" alt="Loading..." style={{width: '200px', height: '200px', display: 'block', margin: '0 auto'}}/>
       </>
       ):
 
@@ -173,7 +186,8 @@ const InformationSubmitted = (props) => {
                 <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
               </h3>
               </div>
-          <button type="submit">پرداخت</button>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}><button type="submit">پرداخت</button><span dir='rtl'><button className='edit_amount' onClick={backToDel}>بازگشت</button></span></div>
+          
         </form>
         </>
         ): (<>
@@ -191,13 +205,13 @@ const InformationSubmitted = (props) => {
               <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
             </h3>
             </div>
-            <button type="submit">پرداخت</button>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}><button type="submit">پرداخت</button><span dir='rtl'><button className='edit_amount' onClick={backToDel}>بازگشت</button></span></div>
           </form>
           </>
           )):(<form onSubmit={handleDeliveryMethod}>
             <label for="del_method" dir='rtl'>مشتری عزیز، شماره همراه شما تایید گردید.<br/>لطفا نحوه دریافت برنج کلات را مشخص نمایید: </label>
             <select name="del_method" id="del_method" dir='rtl' className='select' onChange={handleOptions}>
-              <option value="deliver" dir='rtl'>برنج به آدرس من ارسال شود. (ارسال رایگان برای ۱۰۰ کیلو به بالا)</option>
+              <option value="deliver" dir='rtl'>برنج به آدرس من در {city}  ارسال شود.{deliveryMessage}</option>
               <option value="pick-up" dir='rtl'>برنج را در محل توزیع تحویل خواهم گرفت.</option>
             </select>
             <label className='dual-text' for="edit_amount" dir='rtl'>  مقدار برنج درخواستی: <span dir='ltr'>{fAmount} کیلوگرم <button className='edit_amount' onClick={handleButtonClick}>تغییر</button></span> </label>

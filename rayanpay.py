@@ -23,5 +23,5 @@ def verif_successfull_pay(auth, amount):
     return response.text
 
 if __name__=="__main__":
-    # print(send_payment(10000, 'milad mahdavilayen', '09153820062', '290809238052hjnjk', 'miladmahdavilayen@gmail.com'))
-    print(verif_successfull_pay('f2e9a2f1-e956-47c8-8ffb-a18e01a6cec5', 15000))
+    print(send_payment(10000, 'milad mahdavilayen', '09153820062', '290809238052hjnjk', 'miladmahdavilayen@gmail.com'))
+    # print(verif_successfull_pay('f2e9a2f1-e956-47c8-8ffb-a18e01a6cec5', 15000))
