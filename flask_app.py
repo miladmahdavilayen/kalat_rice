@@ -51,7 +51,7 @@ def submit_form():
     random_code = data['randNumber']
     phone = data['phoneNumber']
     phone = num_to_eng(phone)
-    # send_verif_code(phone, random_code) 
+    send_verif_code(phone, random_code) 
     send_message('miladatx@gmail.com', f'Order Attmept Verif Code: {random_code}', f'user {ename} is attempting to submit a new order. Full Data: {data}')   
     return jsonify({'message': 'Form data inserted successfully!'})
 
