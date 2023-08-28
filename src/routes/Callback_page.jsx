@@ -26,7 +26,7 @@ const PaymentCallback = () => {
 
                 switch (status) {
                     case 'OK':
-                        setMessage(final_status === '100' ? successMessage : failureMessage);
+                        setMessage(final_status === 100 ? successMessage : failureMessage);
                         break;
                     case 'NOK':
                         setMessage(failureMessage);
