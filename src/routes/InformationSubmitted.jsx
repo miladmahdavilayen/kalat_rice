@@ -9,7 +9,7 @@ const InformationSubmitted = (props) => {
   const [amount, setAmount] = useState(props.amount);
   const phone = props.phone;
   const deliveryMessage = ((city === 'مشهد')? '( ارسال رایگان برای ۱۰۰ کیلوگرم به بالا در مشهد)' : '')
-  const [option, setOption] = useState('');
+  const [option, setOption] = useState('deliver');
   const [payment, setPayment] = useState(null);
   const [delMethodPicked, setDeleMethodPicked] = useState(null);
   const [riceKgPrice] = useState(1500000);
