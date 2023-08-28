@@ -6,6 +6,10 @@ const PaymentCallback = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
+    const successMessage = 'پرداخت شما با موفقیت انجام شد. به زودی با شما تماس خواهیم گرفت. با تشکرو برنج لاین!';
+    const failureMessage = 'پرداخت انجام نشد. لطفا مجددا تلاش کنید!';
+    const unknownMessage = 'وضعیت پرداخت نامعلوم.';
+
     const auth_code = queryParams.get('Authority');
     const status = queryParams.get('Status');
 
@@ -15,12 +19,11 @@ const PaymentCallback = () => {
         const fetchPaymentStatus = async () => {
             try {
                 const response = await axios.post('/verify-payment', { status, auth_code });
+                alert(response)
                 const parsedResponse = response.data;
                 const final_status = parsedResponse['status'];
+                alert(final_status)
 
-                const successMessage = 'پرداخت شما با موفقیت انجام شد. به زودی با شما تماس خواهیم گرفت. با تشکرو برنج لاین!';
-                const failureMessage = 'پرداخت انجام نشد. لطفا مجددا تلاش کنید!';
-                const unknownMessage = 'وضعیت پرداخت نامعلوم.';
 
                 switch (status) {
                     case 'OK':
