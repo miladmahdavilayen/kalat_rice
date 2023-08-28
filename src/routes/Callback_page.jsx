@@ -18,11 +18,9 @@ const PaymentCallback = () => {
     useEffect(() => {
         const fetchPaymentStatus = async () => {
             try {
-                const response = await axios.post('/verify-payment', { status, auth_code });
-                alert(response)
-                const parsedResponse = response.data;
-                const final_status = parsedResponse['status'];
+                const final_status = await axios.post('/verify-payment', { status, auth_code });
                 alert(final_status)
+               
 
 
                 switch (status) {

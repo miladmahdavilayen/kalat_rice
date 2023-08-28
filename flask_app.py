@@ -263,7 +263,7 @@ def verify_rayanpay():
         if final_status == '100':
             new_val = {'payment': 'PAID', 'ref_id': ref_id, 'card_holder_pan': card_holder_pan, 'bank_hash': bank_hash }
             existing_user['orders'][-1].update(new_val)
-            return jsonify(response)
+            return final_status
         else:
             return 'Not Paid'
         
