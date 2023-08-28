@@ -98,9 +98,7 @@ const InformationSubmitted = (props) => {
     try {
         const response = await axios.post('/payment-page', { name, orderId, phone, totalPrice });
         
-        // wait for 5 seconds
-        await new Promise(resolve => setTimeout(resolve, 500));
-
+       
         const parsedResponse = JSON.parse(response.data);
         const authorityValue = parsedResponse.authority;
         const baseUrl = 'https://pms.rayanpay.com/pg/startpay/';

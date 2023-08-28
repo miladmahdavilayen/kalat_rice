@@ -20,7 +20,7 @@ const PaymentCallback = () => {
             try {
                 const response = await axios.post('/verify-payment', { status, auth_code });
                 const parsedResponse = JSON.parse(response.data);
-                const final_status = parsedResponse['status'];
+                const final_status = parsedResponse.status;
                 alert(final_status)
 
 
