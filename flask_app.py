@@ -260,12 +260,11 @@ def verify_rayanpay():
         card_holder_pan = data['cardHolderPan']
         bank_hash = data['bankCardHash']
         
-        if int(final_status) == 100:
+        
+        if final_status == 100:
             new_val = {'payment': 'PAID', 'ref_id': ref_id, 'card_holder_pan': card_holder_pan, 'bank_hash': bank_hash }
             existing_user['orders'][-1].update(new_val)
-            return jsonify(response)
-        else:
-            return 'Not Paid'
+        
     return jsonify(response)
         
         
@@ -296,13 +295,25 @@ def post_customers():
 #     existing_user = users.find_one(auth_querry)
 #     amount = existing_user['orders'][-1]['total_charge']
 #     logger.info(f'testing whether it has found the right user and total charge: {amount}')
-#     response = verif_successfull_pay("b957b58d-ae3d-40f1-93dc-2de578125f48", int(amount))
-#     logger.info(response)
+#     response = verif_successfull_pay("b504bb25-9a3d-433c-9635-fda363503f49", int(amount))
+#     logger.info(f'heres the raw response after verifL {response}')
+    
+#     data = json.loads(response) 
+#     final_status = data['status'] 
+#     ref_id = data['refID'] 
+#     card_holder_pan = data['cardHolderPan']
+#     bank_hash = data['bankCardHash']
+    
+#     print(f'jsonified data: {data}', type(data))
+#     print(f'final status: {final_status}', type(final_status))
+    
+    
     
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # test_f()
     
     
     
