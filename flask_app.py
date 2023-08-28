@@ -260,7 +260,7 @@ def verify_rayanpay():
         card_holder_pan = data['cardHolderPan']
         bank_hash = data['bankCardHash']
         
-        if final_status == 100:
+        if int(final_status) == 100:
             new_val = {'payment': 'PAID', 'ref_id': ref_id, 'card_holder_pan': card_holder_pan, 'bank_hash': bank_hash }
             existing_user['orders'][-1].update(new_val)
             return final_status
