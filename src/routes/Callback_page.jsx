@@ -16,23 +16,30 @@ const PaymentCallback = () => {
             try {
                 const response = await axios.post('/verify-payment', { status, auth_code });
                 const parsedResponse = response.data;
-
                 const final_status = parsedResponse['status'];
-                if (status === 'OK'){
-                    if (final_status === '100') {
-                        setMessage('پرداخت شما با موفقیت انجام شد. به زودی با شما تماس خواهیم گرفت. با تشکرو برنج لاین!');
-                    } else {
-                        setMessage('پرداخت انجام نشد. لطفا مجددا تلاش کنید!');
-                    }
-                
-                } else if (status === 'NOK') {
-                    setMessage('پرداخت انجام نشد. لطفا مجددا تلاش کنید!');
-                } else {
-                    setMessage('وضعیت پرداخت نامعلوم.');
+
+                const successMessage = 'پرداخت شما با موفقیت انجام شد. به زودی با شما تماس خواهیم گرفت. با تشکرو برنج لاین!';
+                const failureMessage = 'پرداخت انجام نشد. لطفا مجددا تلاش کنید!';
+                const unknownMessage = 'وضعیت پرداخت نامعلوم.';
+
+                switch (status) {
+                    case 'OK':
+                        setMessage(final_status === '100' ? successMessage : failureMessage);
+                        break;
+                    case 'NOK':
+                        setMessage(failureMessage);
+                        break;
+                    default:
+                        setMessage(unknownMessage);
                 }
             } catch (error) {
-                console.error('Error making payment:', error);
-                setMessage('خطا در انجام پرداخت!');
+                if (axios.isAxiosError(error)) {
+                    console.error('Network error making payment:', error);
+                    setMessage('خطا در ارتباط با سرور.');
+                } else {
+                    console.error('Error making payment:', error);
+                    setMessage('خطا در انجام پرداخت: ' + error.message);
+                }
             }
         };
 
