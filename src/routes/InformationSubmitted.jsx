@@ -6,6 +6,7 @@ import axios from 'axios';
 const InformationSubmitted = (props) => {
   const name = props.personName;
   const city = props.city;
+  const email = props.email;
   const [amount, setAmount] = useState(props.amount);
   const phone = props.phone;
   const deliveryMessage = ((city === 'مشهد')? '( ارسال رایگان برای ۱۰۰ کیلوگرم به بالا در مشهد)' : '')
@@ -113,7 +114,7 @@ const InformationSubmitted = (props) => {
 
     try {
         await axios.post('/submit-initial', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
-        const response = await axios.post('/payment-page', { name, orderId, phone, totalPrice });
+        const response = await axios.post('/payment-page', { name, orderId, phone, totalPrice, email });
         
        
         const parsedResponse = JSON.parse(response.data);

@@ -215,7 +215,7 @@ def send_infoto_rayanpay():
     order_id = data['orderId']
     phone = data['phone']
     amount = data['totalPrice']
-    email = "no email for now"
+    email = data['email']
     logger.info(f"amount {amount} phone {phone} name {name} ord_id {order_id}" )
     response = send_payment(amount, name, phone, order_id, email)  
     auth_code = json.loads(response)['authority']
