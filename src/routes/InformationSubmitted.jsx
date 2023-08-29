@@ -18,6 +18,7 @@ const InformationSubmitted = (props) => {
   const [errors, setErrors] = useState({});
   const [changedAmountStatus, setStatus] = useState(true);
   const [kartKart, setKartKart] = useState(null);
+  const deliveryMethodKartKart = ((option === 'deliver')? 'ارسال': 'دریافت در محل')
 
   
   const riceCost = parseFloat(amount) * riceKgPrice;
@@ -180,8 +181,9 @@ const InformationSubmitted = (props) => {
       </>
       ): kartKart? (
       <>
-      <h2 dir='rtl'>لطفا مبلغ {fTotalPrice} تومان را به شماره کارت یا حساب شبای زیر واریز نمایید و تصویر رسید واریزی را به شماره ۰۹۱۵۳۸۲۰۰۶۲ از طریق واتساپ یا تلگرام ارسال نمایید. </h2>
-      <img src="/static/media/kart.jpg" alt="keshavrzi kart" style={{width: '700px', height: '400px',display: 'block', margin: '0 auto'}}/>
+      <h2 dir='rtl'>لطفا مبلغ {fTotalPrice} تومان را بابت {deliveryMethodKartKart} {fAmount} کیلوگرم برنج لاین، به شماره کارت یا حساب شبای زیر واریز نمایید و تصویر فیش واریزی را به همراه کد رهگیری به شماره ۰۹۱۵۳۸۲۰۰۶۲ از طریق واتساپ یا تلگرام ارسال نمایید. اسکرین شات از این صفحه رسید خرید شماست.</h2>
+      <h5 dir='ltr'>{orderId} کد رهگیری</h5>
+      <img src="/static/media/kart.jpg" alt="keshavrzi kart" className='kart-image'/>
 
       <button className='edit_amount' onClick={() => setKartKart(null)}>بازگشت</button>
       </>):

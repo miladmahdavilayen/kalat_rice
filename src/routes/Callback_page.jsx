@@ -8,30 +8,38 @@ const PaymentCallback = () => {
 
     const successMessage = 'پرداخت شما با موفقیت انجام شد. به زودی با شما تماس خواهیم گرفت. با تشکر.. برنج لاین!';
     const failureMessage = 'پرداخت انجام نشد. لطفا مجددا تلاش کنید!';
-    const unknownMessage = 'وضعیت پرداخت نامعلوم.';
 
     const auth_code = queryParams.get('Authority');
     const status = queryParams.get('Status');
 
     const [message, setMessage] = useState('');
+    const [finalStatus, setFinalStatus] = useState('');
+    const [orderId, setOrderId] = useState('');
+    const [amount, setAmount] = useState('');
+    const [riceCost, setRiceCost] = useState('');
+    const [deliveryType, setDeliveryType] = useState('');
+    const [delCost, setDelCost] = useState('');
+    const [finalCharge, setFinalCharge] = useState('');
 
     useEffect(() => {
         const fetchPaymentStatus = async () => {
             try {
                 const response = await axios.post('/verify-payment', { status, auth_code });
                 const parsedResponse = JSON.parse(response.data);
-                const final_status = parsedResponse.status;
+                setFinalStatus(parsedResponse.final_status);
+                setOrderId(parsedResponse.order_id);
+                setAmount(parsedResponse.amount);
+                setRiceCost(parsedResponse.rice_cost);
+                setDeliveryType(parsedResponse.delivery);
+                setDelCost(parsedResponse.del_cost);
+                setFinalCharge(parsedResponse.charge);
 
-
-                switch (status) {
-                    case 'OK':
-                        setMessage(final_status === 100 ? successMessage : failureMessage);
-                        break;
-                    case 'NOK':
-                        setMessage(failureMessage);
+                switch (finalStatus) {
+                    case 100:
+                        setMessage(successMessage);
                         break;
                     default:
-                        setMessage(unknownMessage);
+                        setMessage(failureMessage);
                 }
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -45,12 +53,22 @@ const PaymentCallback = () => {
         };
 
         fetchPaymentStatus();
-    }, [auth_code, status]);
+    }, [auth_code, status, finalStatus]);
 
     return (
         <div>
-            <h1>وضعیت پرداخت</h1>
             <h2 dir='rtl'>{message}</h2>
+            <h1>رسید خرید</h1>
+            <h5 dir='ltr'>{orderId} کد رهگیری</h5>
+           <form>
+            <div dir='rtl'>
+                <h4 className='dual-text'>صورتحساب:</h4>
+                <h4 className='dual-text'>{amount} کیلوگرم برنج: <span>{riceCost} تومان</span></h4>
+                <h4 className='dual-text'>روش دریافت: <span>{deliveryType === 'deliver' ? 'ارسال به آدرس' : 'دریافت در محل توزیع'}</span></h4>
+                <h4 className='dual-text'>هزینه ارسال: <span>{delCost} تومان</span></h4>
+                <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{finalCharge} تومان</span></h4>
+            </div>
+            </form>
         </div>
     );
 };

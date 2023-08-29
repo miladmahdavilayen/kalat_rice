@@ -114,6 +114,7 @@ margin-top: .5em;
   margin-top: .5em;
   margin-right: 15px;
   min-width: 50px;
+  margin-bottom: 30px;
   }
   .edit_amount:hover {
     background-color: #d1f824;
@@ -656,4 +657,22 @@ footer {
 .loading-gif {
   width: 50px; /* Adjust the width as needed */
   height: 50px; /* Adjust the height as needed */
+}
+
+
+.kart-image {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  min-width: 350px;
+  height: auto;
+  transition: transform 0.3s ease-out;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px #201c1c;
+  align-items: center;
+}
+
+.kart-image:hover {
+  transform: scale(1.1);
+  
 }
