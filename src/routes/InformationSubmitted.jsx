@@ -17,6 +17,7 @@ const InformationSubmitted = (props) => {
   const [showInput, setShowInput] = useState(false);
   const [errors, setErrors] = useState({});
   const [changedAmountStatus, setStatus] = useState(true);
+  const [kartKart, setKartKart] = useState(null);
 
   
   const riceCost = parseFloat(amount) * riceKgPrice;
@@ -99,7 +100,6 @@ const InformationSubmitted = (props) => {
     event.preventDefault();
     setPayment(true);
 
-    
     try {
         await axios.post('/submit-initial', {name, option, orderId, phone, riceKgPrice, deliveryCost, totalPrice, amount});
         const response = await axios.post('/payment-page', { name, orderId, phone, totalPrice });
@@ -163,12 +163,18 @@ const InformationSubmitted = (props) => {
   
   return (
     <div>
-      { payment? (
+      { payment&& !kartKart? (
       <>
-      <h2 dir='rtl'>در حال بارگذاری صفحه پرداخت...</h2>
+      <h2 dir='rtl'>در حال بارگذاری درگاه پرداخت.. لطفا کمی صبر کنید.</h2>
       <img src="/static/media/loading.gif" alt="Loading..." style={{width: '200px', height: '200px', display: 'block', margin: '0 auto'}}/>
       </>
-      ):
+      ): payment&& kartKart? (
+      <>
+      <h2 dir='rtl'>لطفا مبلغ {fTotalPrice} تومان را به شماره کارت یا حساب شبای زیر واریز نمایید و تصویر رسید واریزی را به شماره ۰۹۱۵۳۸۲۰۰۶۲ از طریق واتساپ یا تلگرام ارسال نمایید. </h2>
+      <img src="/static/media/kart.jpg" alt="keshavrzi kart" style={{width: '700px', height: '400px',display: 'block', margin: '0 auto'}}/>
+
+      <button className='edit_amount' onClick={() => {setKartKart(null); setPayment(null)}}>بازگشت</button>
+      </>):
 
       delMethodPicked? (option === 'deliver'? (
         <>
@@ -186,7 +192,7 @@ const InformationSubmitted = (props) => {
                 <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
               </h3>
               </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}><button type="submit">پرداخت</button><span dir='rtl'><button className='edit_amount' onClick={backToDel}>بازگشت</button></span></div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}><button type="submit">درگاه پرداخت</button><button className='submit_but' onClick={() => setKartKart(true)} >کارت به کارت</button><button className='edit_amount' onClick={backToDel}>بازگشت</button></div>
           
         </form>
         </>
@@ -205,7 +211,7 @@ const InformationSubmitted = (props) => {
               <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
             </h3>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}><button type="submit">پرداخت</button><span dir='rtl'><button className='edit_amount' onClick={backToDel}>بازگشت</button></span></div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}><button type="submit">درگاه پرداخت</button><button className='submit_but' onClick={() => setKartKart(true)} >کارت به کارت</button><button className='edit_amount' onClick={backToDel}>بازگشت</button></div>
           </form>
           </>
           )):(<form onSubmit={handleDeliveryMethod}>

@@ -95,6 +95,10 @@ margin-top: .5em;
   background-color: #d1f824;
 }
 
+.submit_but:hover {
+  background-color: #d1f824;
+}
+
 
 .edit_amount{
   background-color: rgba(236, 239, 141, 0.8);;
