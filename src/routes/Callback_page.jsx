@@ -20,6 +20,7 @@ const PaymentCallback = () => {
     const [deliveryType, setDeliveryType] = useState('');
     const [delCost, setDelCost] = useState('');
     const [finalCharge, setFinalCharge] = useState('');
+    const [name, setName] = useState('');
 
     const toFarsiPrice = (price) => {
         return (price/10).toLocaleString('fa-IR').replace(/IRT/, '').replace(/٬/g, ',');
@@ -35,6 +36,7 @@ const PaymentCallback = () => {
             try {
                 const response = await axios.post('/verify-payment', { status, auth_code });
                 const parsedResponse = response.data;
+                setName(parsedResponse.name);
                 setFinalStatus(parsedResponse.final_status);
                 setOrderId(parsedResponse.order_id);
                 setAmount(toFarsiNum(parsedResponse.amount));
@@ -71,7 +73,8 @@ const PaymentCallback = () => {
             <h5 dir='ltr'>{orderId} کد رهگیری</h5>
            <form>
             <div dir='rtl'>
-                <h4 className='dual-text'>صورتحساب:</h4>
+                <h4 style={{ textAlign: 'center' }}>رسید خرید</h4>
+                <h4 className='dual-text'>نام خریدار: <span>{name}</span></h4>
                 <h4 className='dual-text'>{amount} کیلوگرم برنج: <span>{riceCost} تومان</span></h4>
                 <h4 className='dual-text'>روش دریافت: <span>{deliveryType === 'deliver' ? 'ارسال به آدرس' : 'دریافت در محل توزیع'}</span></h4>
                 <h4 className='dual-text'>هزینه ارسال: <span>{delCost} تومان</span></h4>

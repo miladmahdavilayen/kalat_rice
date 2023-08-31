@@ -309,9 +309,7 @@ def verify_rayanpay():
 #         order_id = kg_price = existing_user['orders'][-1]['order_id']
 #         delivery_cost = amount - rice_cost
 
-#         # response = verif_successfull_pay(auth_code, int(amount))
-        
-#         # data = json.loads(response) 
+      
 #         data = {'status': 100, 'refID':'2380234', 'cardHolderPan': 8973982, 'bankCardHash': 'kanskjdfn'}
 #         final_status = data['status'] 
 #         ref_id = data['refID'] 
@@ -323,15 +321,8 @@ def verify_rayanpay():
 #             'name': name, 'charge': amount, 'amount': amount_kiloo, 'delivery': delivery, 'del_cost': delivery_cost,
 #             'final_status': final_status, 'rice_cost': rice_cost, 'order_id': order_id
 #         }
-     
-        # if final_status == 100:
-        #     new_val = {'payment': 'PAID', 'ref_id': ref_id,
-        #                 'card_holder_pan': card_holder_pan,
-        #                 'bank_hash': bank_hash, 'final_status': final_status}
-        #     existing_user['orders'][-1].update(new_val)
-        #     users.update_one(auth_querry, {"$set": {"orders": existing_user['orders']}})
         
-    # return jsonify(data_dict)
+#     return jsonify(data_dict)
         
 
 
