@@ -21,18 +21,27 @@ const PaymentCallback = () => {
     const [delCost, setDelCost] = useState('');
     const [finalCharge, setFinalCharge] = useState('');
 
+    const toFarsiPrice = (price) => {
+        return (price/10).toLocaleString('fa-IR').replace(/IRT/, '').replace(/٬/g, ',');
+      };
+
+    const toFarsiNum = (number) => {
+    return parseFloat(number).toLocaleString('fa');
+    };
+    
+
     useEffect(() => {
         const fetchPaymentStatus = async () => {
             try {
                 const response = await axios.post('/verify-payment', { status, auth_code });
-                const parsedResponse = JSON.parse(response.data);
+                const parsedResponse = response.data;
                 setFinalStatus(parsedResponse.final_status);
                 setOrderId(parsedResponse.order_id);
-                setAmount(parsedResponse.amount);
-                setRiceCost(parsedResponse.rice_cost);
+                setAmount(toFarsiNum(parsedResponse.amount));
+                setRiceCost(toFarsiPrice(parsedResponse.rice_cost));
                 setDeliveryType(parsedResponse.delivery);
-                setDelCost(parsedResponse.del_cost);
-                setFinalCharge(parsedResponse.charge);
+                setDelCost(toFarsiPrice(parsedResponse.del_cost));
+                setFinalCharge(toFarsiPrice(parsedResponse.charge));
 
                 switch (finalStatus) {
                     case 100:

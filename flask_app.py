@@ -233,6 +233,7 @@ def send_infoto_rayanpay():
     return jsonify(response)
 
 
+# original verify rayanpay function
 @app.route('/verify-payment', methods=['POST'])
 def verify_rayanpay():
     data = request.json
@@ -256,6 +257,7 @@ def verify_rayanpay():
         kg_price = existing_user['orders'][-1]['rice_kg_price']
         rice_cost = kg_price * int(amount_kiloo)
         order_id = kg_price = existing_user['orders'][-1]['order_id']
+        delivery_cost = amount - rice_cost
 
         response = verif_successfull_pay(auth_code, int(amount))
         
@@ -280,6 +282,56 @@ def verify_rayanpay():
         
     return jsonify(data_dict)
         
+
+# test verify rayanpay function
+# @app.route('/verify-payment', methods=['POST'])
+# def verify_rayanpay():
+#     data = request.json
+#     status = data['status']
+#     auth_code = data['auth_code']
+    
+#     if status == 'OK':
+#         users = load_db()
+#         auth_querry = {
+#             "orders": {
+#                 "$elemMatch": {
+#                     "rayanpay_auth": auth_code
+#                 }
+#             }
+#         }
+#         existing_user = users.find_one(auth_querry)
+#         amount = existing_user['orders'][-1]['total_charge']
+#         amount_kiloo = existing_user['orders'][-1]['final_amount']
+#         delivery = existing_user['orders'][-1]['delivery_type']
+#         name = existing_user['name']
+#         kg_price = existing_user['orders'][-1]['rice_kg_price']
+#         rice_cost = kg_price * int(amount_kiloo)
+#         order_id = kg_price = existing_user['orders'][-1]['order_id']
+#         delivery_cost = amount - rice_cost
+
+#         # response = verif_successfull_pay(auth_code, int(amount))
+        
+#         # data = json.loads(response) 
+#         data = {'status': 100, 'refID':'2380234', 'cardHolderPan': 8973982, 'bankCardHash': 'kanskjdfn'}
+#         final_status = data['status'] 
+#         ref_id = data['refID'] 
+#         card_holder_pan = data['cardHolderPan']
+#         bank_hash = data['bankCardHash']
+        
+        
+#         data_dict = {
+#             'name': name, 'charge': amount, 'amount': amount_kiloo, 'delivery': delivery, 'del_cost': delivery_cost,
+#             'final_status': final_status, 'rice_cost': rice_cost, 'order_id': order_id
+#         }
+     
+        # if final_status == 100:
+        #     new_val = {'payment': 'PAID', 'ref_id': ref_id,
+        #                 'card_holder_pan': card_holder_pan,
+        #                 'bank_hash': bank_hash, 'final_status': final_status}
+        #     existing_user['orders'][-1].update(new_val)
+        #     users.update_one(auth_querry, {"$set": {"orders": existing_user['orders']}})
+        
+    # return jsonify(data_dict)
         
 
 
