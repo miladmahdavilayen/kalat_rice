@@ -28,7 +28,7 @@ const Order = () => {
   const [showPwInput, setShowInput] = useState(null);
   const [showAdmin, setShowAdmin] = useState(null);
 
-  const [todayPrice] = useState((150).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, ''));
+  const [todayPrice] = useState((150).toLocaleString('fa-IR').replace(/IRT/, ''));
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");

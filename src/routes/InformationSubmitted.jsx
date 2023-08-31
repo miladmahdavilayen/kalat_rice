@@ -24,9 +24,9 @@ const InformationSubmitted = (props) => {
   
   const riceCost = parseFloat(amount) * riceKgPrice;
   const totalPrice = deliveryCost + riceCost ;
-  const fRiceCost = (riceCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '').replace(/٬/g, ',');
-  const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '').replace(/٬/g, ',');
-  const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR', { style: 'currency', currency: 'IRT' }).replace(/IRT/, '').replace(/٬/g, ',');
+  const fRiceCost = (riceCost/10).toLocaleString('fa-IR').replace(/IRT/, '').replace(/٬/g, ',');
+  const fTotalPrice = (totalPrice/10).toLocaleString('fa-IR').replace(/IRT/, '').replace(/٬/g, ',');
+  const fDeliveryCost = (deliveryCost/10).toLocaleString('fa-IR').replace(/IRT/, '').replace(/٬/g, ',');
   const fAmount = (parseFloat(amount)).toLocaleString('fa');
   const [orderId] = useState(generateOrderId());
 
@@ -200,7 +200,7 @@ const InformationSubmitted = (props) => {
               <h3  dir='rtl'> 
                 <h4 className='dual-text'>صورتحساب:</h4>
                 <h4 className='dual-text' >{fAmount} کیلوگرم برنج: <span> {fRiceCost} تومان</span> </h4>
-                <h4 className='dual-text'>روش دریافت: <span>دلیوری به آدرس</span> </h4> 
+                <h4 className='dual-text'>روش دریافت: <span>ارسال به آدرس</span> </h4> 
                 <h4 className='dual-text'>هزینه ارسال: <span>{fDeliveryCost} تومان</span> </h4> 
                 <h4 className='dual-text'>مجموع مبلغ قابل پرداخت: <span>{fTotalPrice} تومان</span></h4>
               </h3>
