@@ -15,12 +15,6 @@ from helper import *
 
 app = Flask(__name__, static_folder='./build/static', template_folder='./build')
 
-limiter = Limiter(
-    get_remote_address,
-    app=app,
-    default_limits=["60 per day", "10 per hour"],
-    storage_uri="memory://",
-)
 
 app.secret_key = 'testkey'
 
@@ -28,6 +22,15 @@ app.secret_key = 'testkey'
 @app.route('/<path:path>')
 def catch_all(path):
     return render_template('index.html')
+
+
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["60 per day", "10 per hour"],
+    storage_uri="memory://",
+)
 
 
 def load_db():
