@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.89483a60.css",
-    "main.js": "/static/js/main.6b54df2a.js",
+    "main.js": "/static/js/main.f85cbcae.js",
     "static/media/rice.jpg": "/static/media/rice.e79bb24af52429530869.jpg",
     "static/media/Vazirmatn-SemiBold.ttf": "/static/media/Vazirmatn-SemiBold.1c7a712fb68c4f09a4a1.ttf",
     "static/media/koodak.ttf": "/static/media/koodak.54b00cd402e2e2b372b3.ttf",
@@ -9,12 +9,11 @@
     "static/media/bassam.ttf": "/static/media/bassam.d6a2e556551e6a6c42e1.ttf",
     "static/media/mesr.ttf": "/static/media/mesr.8c524f31bce5b05f6e24.ttf",
     "index.html": "/index.html",
-    "static/media/undefined.txt": "/static/media/undefined.31d6cfe0d16ae931b73c.txt",
     "main.89483a60.css.map": "/static/css/main.89483a60.css.map",
-    "main.6b54df2a.js.map": "/static/js/main.6b54df2a.js.map"
+    "main.f85cbcae.js.map": "/static/js/main.f85cbcae.js.map"
   },
   "entrypoints": [
     "static/css/main.89483a60.css",
-    "static/js/main.6b54df2a.js"
+    "static/js/main.f85cbcae.js"
   ]
 }

@@ -6,7 +6,6 @@ import Contact from "./routes/contacts"
 import About from "./routes/About"
 import Gallery from "./routes/gallary"
 import PaymentCallback from './routes/Callback_page';
-import Undefined from './routes/undefined.txt'
 
 
 import "./App.css"
@@ -24,8 +23,6 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/payment-callback" element={<PaymentCallback />} />
-        <Route path="/undefined.txt" element={<Undefined />} />
-
       </Route>
     )
   )
