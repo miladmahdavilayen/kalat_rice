@@ -1,0 +1,4 @@
+Update gmail api auth key:
+    All you need to do is just to try running the website locally, remove the outdated token and reauthorize using the gmail browser setup every 3 months.
+
+Mongo db also needs to be reauthorized
